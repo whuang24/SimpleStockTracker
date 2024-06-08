@@ -7,13 +7,15 @@ import { getStockSymbols, getCompanyProfile } from './finnhubService';
 
 function App() {
   const [allStocks, setAllStocks] = useState([])
-  const [currStock, setCurrStock] = useState({})
+  const [currStock, setCurrStock] = useState('')
+  const [watchlist, setWatchlist] = useState([])
   
     useEffect(() => {
       async function LoadData() {
         try {
           const usSymbols = await getStockSymbols('US')
           
+          console.log(usSymbols)
           setAllStocks(usSymbols)
         } catch (error) {
           console.error("error fetching data:", error)
@@ -23,20 +25,23 @@ function App() {
       LoadData();
     }, [])
 
+    function handleSelect(symbol) {
+      setCurrStock(symbol);
+    }
 
-  // const finnhub = require('finnhub');
-  // const api_key = finnhub.ApiClient.instance.authentications['api_key']
-  // api_key.apiKey = "cphvkspr01qjh6bhvaa0cphvkspr01qjh6bhvaag" // Replace this
-  // const finnhubClient = new finnhub.DefaultApi()
-
-  // finnhubClient.stockSymbols("US", (error, data, response) => {
-  //   console.log(data);
-  // })
+    function selectWatchlist(arrayOfSymbols) {
+      setWatchlist(oldWatchlist => {
+        return [
+          ...oldWatchlist,
+          ...arrayOfSymbols
+        ]
+      })
+    }
 
   return (
     <div className="App">
       <Split className="split">
-        <Watchlist />
+        <Watchlist allStocks={allStocks} watchlist={watchlist} selectWatchlist={selectWatchlist} currStock={currStock} handleSelect={handleSelect} />
         <Details />
       </Split>
     </div>

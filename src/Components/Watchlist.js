@@ -7,7 +7,7 @@ import StockCard from './StockCard'
 
 library.add(fas)
 
-export default function Watchlist() {
+export default function Watchlist(props) {
     return (
         <div className="watchlistContainer">
             <div className="watchlistHeader">
