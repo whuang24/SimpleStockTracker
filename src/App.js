@@ -3,38 +3,35 @@ import Split from "react-split"
 import Watchlist from "./Components/Watchlist"
 import Details from "./Components/Details"
 import React, {useState, useEffect} from 'react'
-import axios from "axios"
+import { getStockSymbols, getCompanyProfile } from './finnhubService';
 
 function App() {
-  const finnhub = require('finnhub');
+  const [allStocks, setAllStocks] = useState([])
+  const [currStock, setCurrStock] = useState({})
+  
+    useEffect(() => {
+      async function LoadData() {
+        try {
+          const usSymbols = await getStockSymbols('US')
+          
+          setAllStocks(usSymbols)
+        } catch (error) {
+          console.error("error fetching data:", error)
+        }
+      }
+      
+      LoadData();
+    }, [])
 
-  const api_key = finnhub.ApiClient.instance.authentications['api_key']
-  api_key.apiKey = "<cphsbphr01qjh6bho5igcphsbphr01qjh6bho5j0>" // Replace this
-  const finnhubClient = new finnhub.DefaultApi()
 
-  async function fetchSymbols(exchange) {
-    try {
-      const response = await axios.get(`https://finnhub.io/api/v1/stock/symbol?exchange=${exchange}&token=cphsbphr01qjh6bho5igcphsbphr01qjh6bho5j0`);
-      return response.data.map(stock => ({ symbol: stock.symbol, name: stock.description }));
-    } catch (error) {
-      console.error(`Error fetching symbols for ${exchange}:`, error);
-      return [];
-    }
-  }
+  // const finnhub = require('finnhub');
+  // const api_key = finnhub.ApiClient.instance.authentications['api_key']
+  // api_key.apiKey = "cphvkspr01qjh6bhvaa0cphvkspr01qjh6bhvaag" // Replace this
+  // const finnhubClient = new finnhub.DefaultApi()
 
-  async function getAllSymbols() {
-    const tsxSymbols = await fetchSymbols('TSX');
-    const nyseSymbols = await fetchSymbols('NYSE');
-    const nasdaqSymbols = await fetchSymbols('NASDAQ');
-    
-    const allSymbols = [...tsxSymbols, ...nyseSymbols, ...nasdaqSymbols];
-    console.log(allSymbols);
-    
-    return allSymbols;
-  }
-
-  console.log(getAllSymbols().then(symbols => console.log(symbols)));
-
+  // finnhubClient.stockSymbols("US", (error, data, response) => {
+  //   console.log(data);
+  // })
 
   return (
     <div className="App">

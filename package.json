@@ -11,10 +11,12 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.2",
     "finnhub": "^1.2.18",
+    "querystring-es3": "^0.2.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "^5.0.1",
     "react-split": "^2.0.14",
+    "superagent": "^9.0.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -40,5 +42,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.24.7"
   }
 }
