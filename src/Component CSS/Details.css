@@ -1,0 +1,10 @@
+.detailsContainer {
+    flex: 3;
+}
+
+.detailsContainer {
+    padding: 20px;
+    overflow-y: auto;
+    position: relative;
+}
+  

@@ -1,5 +1,5 @@
 import React from "react"
-import '../App.css';
+import '../Component CSS/Details.css';
 
 export default function Watchlist() {
     return (

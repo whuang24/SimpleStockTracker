@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: #222831;
 }
 
 .App-logo {
@@ -37,62 +38,8 @@
   }
 }
 
-.watchlistContainer,
-.detailsContainer {
-  padding: 20px;
-  overflow-y: auto;
-  position: relative;
-}
-
-.watchlistContainer {
-  flex: 1;
-  background-color: #37383a;
-}
-
-.detailsContainer {
-  flex: 3;
-}
-
 .split {
   display: flex;
   height: 100vh;
-}
-
-.watchlistContainer::after {
-  content: '';
-  position: absolute;
-  top: 5%;
-  bottom: 5%;
-  right: 0;
-  width: 2px;
-  border-radius: 25px;
-  background-color: rgb(177, 177, 177); /* White color */
-}
-
-.watchlistHeader {
-  display: flex;
-  align-items: center;
-}
-
-.watchlistHeader > h1 {
-  margin-left: 60px;
-}
-
-.addStocksBtn {
-  margin-left: auto;
-  display: flex;
-  border: none;
-  cursor: pointer;
-  width: 50px;
-  height: 50px;
-  align-items: center;
-  justify-content: center;
-  margin-right: 60px;
-  border-radius: 100%;
-}
-
-.fa-plus {
-  font-size: 32px;
-  color: rgb(255, 255, 255);
 }
 
