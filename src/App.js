@@ -3,12 +3,12 @@ import Split from "react-split"
 import Watchlist from "./Components/Watchlist"
 import Details from "./Components/Details"
 import React, {useState, useEffect} from 'react'
-import { getStockSymbols, getCompanyProfile } from './finnhubService';
+import { getStockSymbols, finnhubClient} from './finnhubService';
 
 function App() {
   const [allStocks, setAllStocks] = useState([])
   const [currStock, setCurrStock] = useState('')
-  const [watchlist, setWatchlist] = useState([])
+  const [watchlist, setWatchlist] = useState(['AAPL', 'MSFT', 'NVDA'])
   
     useEffect(() => {
       async function LoadData() {
@@ -25,7 +25,7 @@ function App() {
       LoadData();
     }, [])
 
-    function handleSelect(symbol) {
+    function detailSelect(symbol) {
       setCurrStock(symbol);
     }
 
@@ -41,7 +41,13 @@ function App() {
   return (
     <div className="App">
       <Split className="split">
-        <Watchlist allStocks={allStocks} watchlist={watchlist} selectWatchlist={selectWatchlist} currStock={currStock} handleSelect={handleSelect} />
+        <Watchlist 
+          allStocks={allStocks} 
+          watchlist={watchlist} 
+          selectWatchlist={selectWatchlist}
+          currStock={currStock}
+          detailSelect={detailSelect}
+        />
         <Details />
       </Split>
     </div>
