@@ -2,14 +2,16 @@ import {React, useEffect, useState} from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons';
-import '../Component CSS/Watchlist.css';
+import '../Component CSS/Watchlist.css'
 import StockCard from './StockCard'
-import { finnhubClient } from "../finnhubService";
+import StockDropdown from './stockDropdown'
+import { finnhubClient } from "../finnhubService"
 
 library.add(fas)
 
 export default function Watchlist(props) {
     const [watchlistData, setWatchlistData] = useState(new Map());
+    const [dropdownVisible, setDropdownVisible] = useState(false);
 
     const marketUp = () => {
         const now = new Date();
@@ -47,6 +49,10 @@ export default function Watchlist(props) {
         }
     }
 
+    function toggleDropdown() {
+        setDropdownVisible(!dropdownVisible);
+    }
+
     useEffect(() => {
         fetchData();
 
@@ -62,14 +68,17 @@ export default function Watchlist(props) {
         return <StockCard key={symbol} symbol={symbol} data={watchlistData.get(symbol)} handleClick={props.detailSelect}/>
     })
 
-
     return (
         <div className="watchlistContainer">
             <div className="watchlistHeader">
                 <h1>Watchlist</h1>
-                <button className="addStocksBtn">
-                    <FontAwesomeIcon icon="fa-solid fa-plus" className="fa-plus"/>
+                <button className="addStocksBtn" onClick={toggleDropdown}>
+                    {dropdownVisible ?
+                        <FontAwesomeIcon icon="fa-solid fa-minus" className="fa-minus"/> :
+                        <FontAwesomeIcon icon="fa-solid fa-plus" className="fa-plus"/>
+                    }
                 </button>
+                {dropdownVisible && <StockDropdown watchlist={props.watchlist} handleSelect={props.selectWatchlist} />}
             </div>
             <div className="watchlistBody">
                 {stockCardElements}
