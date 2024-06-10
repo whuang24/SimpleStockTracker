@@ -10,8 +10,30 @@ library.add(fas)
 
 export default function Watchlist(props) {
     const [watchlistData, setWatchlistData] = useState(new Map());
+
+    const marketUp = () => {
+        const now = new Date();
+        const day = now.getUTCDay();
+        const hour = now.getUTCHours();
+        const minute = now.getUTCMinutes();
+
+        const marketOpenHour = 14;
+        const marketCloseHour = 21;
     
-    useEffect(() => {
+        const marketOpenMinute = 30;
+    
+        if (day < 1 || day > 5) {
+          return false;
+        }
+        
+        if (hour < marketOpenHour || (hour === marketOpenHour && minute < marketOpenMinute) || hour > marketCloseHour) {
+          return false;
+        }
+        
+        return true;
+      };
+
+    const fetchData = async () => {
         for (let i = 0; i < props.watchlist.length; i++) {
             const symbol = props.watchlist[i]
         
@@ -22,6 +44,16 @@ export default function Watchlist(props) {
                     return newData
                 })
             })
+        }
+    }
+
+    useEffect(() => {
+        fetchData();
+
+        if (marketUp) {
+            const intervalId = setInterval(fetchData, 10000);
+
+            return () => clearInterval(intervalId);
         }
     }, []);
     

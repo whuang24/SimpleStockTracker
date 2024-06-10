@@ -15,7 +15,6 @@ function App() {
         try {
           const usSymbols = await getStockSymbols('US')
           
-          console.log(usSymbols)
           setAllStocks(usSymbols)
         } catch (error) {
           console.error("error fetching data:", error)
