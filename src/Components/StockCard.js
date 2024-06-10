@@ -15,17 +15,17 @@ export default function StockCard(props) {
     }
 
     return (
-        <div className="stockCard" onClick={() => props.detailSelect(props.key)}>
-            <h1 className="cardSymbol">{props.symbol}</h1>
-            <div className="cardStats">
-                <h2 className="">{props.data && props.data.c}</h2>
-                <div className="trendBox" style={style}>
-                    <h3>{props.data && props.data.d}</h3>
-                    {props.data && (props.data.d >= 0?
-                        <FontAwesomeIcon icon="fa-solid fa-angle-up" className="trendArrow"/> :
-                        <FontAwesomeIcon icon="fa-solid fa-angle-down" className="trendArrow"/>)
-                        }
-                </div>
+        <div className="stockCard" onClick={() => props.handleClick(props.symbol)}>
+            <h2 className="cardSymbol">{props.symbol}</h2>
+            <h3 className="cardPrice">${props.data && props.data.c}
+                <sub>USD</sub>
+            </h3>
+            <div className="trendBox" style={style}>
+                <h4>{props.data && props.data.d}</h4>
+                {props.data && (props.data.d >= 0?
+                    <FontAwesomeIcon icon="fa-solid fa-angle-up" className="trendArrow"/> :
+                    <FontAwesomeIcon icon="fa-solid fa-angle-down" className="trendArrow"/>)
+                    }
             </div>
         </div>
     )
