@@ -27,7 +27,7 @@ export default function Watchlist(props) {
     
 
     const stockCardElements = props.watchlist.map(symbol => {
-        return <StockCard key={symbol} symbol={symbol} data={watchlistData.get(symbol)}/>
+        return <StockCard key={symbol} symbol={symbol} data={watchlistData.get(symbol)} handleClick={props.detailSelect}/>
     })
 
 

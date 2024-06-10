@@ -26,6 +26,7 @@ function App() {
     }, [])
 
     function detailSelect(symbol) {
+      console.log(symbol);
       setCurrStock(symbol);
     }
 
