@@ -13,7 +13,7 @@ export default function Watchlist(props) {
     const [watchlistData, setWatchlistData] = useState(new Map());
     const [dropdownVisible, setDropdownVisible] = useState(false);
 
-    const marketUp = () => {
+    function marketUp() {
         const now = new Date();
         const day = now.getUTCDay();
         const hour = now.getUTCHours();
@@ -56,7 +56,7 @@ export default function Watchlist(props) {
     useEffect(() => {
         fetchData();
 
-        if (marketUp) {
+        if (marketUp()) {
             const intervalId = setInterval(fetchData, 10000);
 
             return () => clearInterval(intervalId);
@@ -78,7 +78,7 @@ export default function Watchlist(props) {
                         <FontAwesomeIcon icon="fa-solid fa-plus" className="fa-plus"/>
                     }
                 </button>
-                {dropdownVisible && <StockDropdown watchlist={props.watchlist} handleSelect={props.selectWatchlist} />}
+                {dropdownVisible && <StockDropdown allStocks={props.allStocks} watchlist={props.watchlist} handleSelect={props.selectWatchlist} />}
             </div>
             <div className="watchlistBody">
                 {stockCardElements}

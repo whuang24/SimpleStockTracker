@@ -13,9 +13,10 @@ function App() {
     useEffect(() => {
       async function LoadData() {
         try {
-          const usSymbols = await getStockSymbols('US')
+          const usStocks = await getStockSymbols('US')
           
-          setAllStocks(usSymbols)
+          console.log(usStocks)
+          setAllStocks(usStocks)
         } catch (error) {
           console.error("error fetching data:", error)
         }

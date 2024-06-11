@@ -46,6 +46,11 @@
   color: rgb(255, 255, 255);
 }
 
+.fa-minus {
+  font-size: 32px;
+  color: rgb(255, 255, 255);
+}
+
 .watchlistBody {
     margin: 10px;
     display: grid;
