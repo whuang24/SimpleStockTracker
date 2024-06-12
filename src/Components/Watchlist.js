@@ -1,10 +1,9 @@
 import {React, useEffect, useState} from "react"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import '../Component CSS/Watchlist.css'
 import StockCard from './StockCard'
-import StockDropdown from './stockDropdown'
+import StockSearchbar from './stockSearchbar'
 import { finnhubClient } from "../finnhubService"
 
 library.add(fas)
@@ -49,10 +48,6 @@ export default function Watchlist(props) {
         }
     }
 
-    function toggleDropdown() {
-        setDropdownVisible(!dropdownVisible);
-    }
-
     useEffect(() => {
         fetchData();
 
@@ -72,14 +67,8 @@ export default function Watchlist(props) {
         <div className="watchlistContainer">
             <div className="watchlistHeader">
                 <h1>Watchlist</h1>
-                <button className="addStocksBtn" onClick={toggleDropdown}>
-                    {dropdownVisible ?
-                        <FontAwesomeIcon icon="fa-solid fa-minus" className="fa-minus"/> :
-                        <FontAwesomeIcon icon="fa-solid fa-plus" className="fa-plus"/>
-                    }
-                </button>
-                {dropdownVisible && <StockDropdown allStocks={props.allStocks} watchlist={props.watchlist} handleSelect={props.selectWatchlist} />}
             </div>
+            <StockSearchbar allStocks={props.allStocks} watchlist={props.watchlist} handleSelect={props.selectWatchlist} />
             <div className="watchlistBody">
                 {stockCardElements}
             </div>

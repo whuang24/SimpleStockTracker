@@ -31,3 +31,12 @@ export const getStockSymbols = async (exchange) => {
     throw error;
   }
 };
+
+export const searching = async (search) => {
+  const response = await fetch(`https://finnhub.io/api/v1/search?q=${search}&token=${API_KEY}`);
+  const data = await response.json();
+  return data.result.map((item) => ({
+    symbol: item.symbol,
+    name: item.description
+  }));
+}
