@@ -3,7 +3,6 @@ import axios from 'axios';
 
 const API_KEY = 'cphvkspr01qjh6bhvaa0cphvkspr01qjh6bhvaag'; // Replace with your Finnhub API key
 
-
 //Basic finnhub initialization
 const finnhub = require('finnhub')
 
@@ -20,7 +19,7 @@ const finnhubApi = axios.create({
   },
 });
 
-export const getStockSymbols = async (exchange) => {
+export async function getStockSymbols(exchange) {
   try {
     const response = await finnhubApi.get('/stock/symbol', {
       params: { exchange },
@@ -32,11 +31,17 @@ export const getStockSymbols = async (exchange) => {
   }
 };
 
-export const searching = async (search) => {
+export async function searching(search) {
   const response = await fetch(`https://finnhub.io/api/v1/search?q=${search}&token=${API_KEY}`);
   const data = await response.json();
   return data.result.map((item) => ({
     symbol: item.symbol,
     name: item.description
   }));
+}
+
+export async function isMarketOpen() {
+  const response = await fetch(`https://finnhub.io/api/v1/stock/market-status?exchange=US&token=${API_KEY}`);
+  const data = await response.json();
+  return data.isOpen;
 }

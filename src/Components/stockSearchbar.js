@@ -5,7 +5,6 @@ import {searching} from "../finnhubService"
 export default function StockSearchbar(props) {
     const [search, setSearch] = useState('')
     const [suggestions, setSuggestions] = useState([])
-    const [selectedStocks, setSelectedStocks] = useState([])
     const [dropdownVisible, setDropdownVisible] = useState(false);
 
 
@@ -23,15 +22,24 @@ export default function StockSearchbar(props) {
         }, 500)
 
         return() => clearTimeout(timeoutId)
-    }, [search, searching])
+    }, [search])
 
     function handleSearch(input) {
         setSearch(input.target.value)
     }
 
+    function addToSelection(event, symbol) {
+        event.stopPropagation();
+        props.handleSelect([symbol])
+    }
+
     const suggestionElements = suggestions.map((suggestion) => {
         return (
-            <div key={suggestion.symbol} className="searchResultItems">{suggestion.symbol} - {suggestion.name}</div>
+            <div key={suggestion.symbol} className="searchResultItems">{suggestion.symbol} - {suggestion.name}
+                <button onClick={(event) => 
+                    addToSelection(event, suggestion.symbol)
+                }>Add to Watchlist</button>
+            </div>
         )
     })
 
@@ -42,7 +50,7 @@ export default function StockSearchbar(props) {
                 value={search}
                 onChange={handleSearch}
                 className="stockSearch"
-                placeholder="Search for stocks to add to watchlist"
+                placeholder="Search for stock symbols to add to watchlist"
             />
             {dropdownVisible && 
                 <div className="searchResults">

@@ -31,6 +31,7 @@ function App() {
     }
 
     function selectWatchlist(arrayOfSymbols) {
+      console.log(arrayOfSymbols);
       setWatchlist(oldWatchlist => {
         return [
           ...oldWatchlist,

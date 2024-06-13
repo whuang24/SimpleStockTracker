@@ -4,37 +4,16 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import '../Component CSS/Watchlist.css'
 import StockCard from './StockCard'
 import StockSearchbar from './stockSearchbar'
-import { finnhubClient } from "../finnhubService"
+import { finnhubClient, isMarketOpen } from "../finnhubService"
 
 library.add(fas)
 
 export default function Watchlist(props) {
     const [watchlistData, setWatchlistData] = useState(new Map());
     const [dropdownVisible, setDropdownVisible] = useState(false);
+    const [marketOpen, setMarketOpen] = useState(isMarketOpen());
 
-    function marketUp() {
-        const now = new Date();
-        const day = now.getUTCDay();
-        const hour = now.getUTCHours();
-        const minute = now.getUTCMinutes();
-
-        const marketOpenHour = 14;
-        const marketCloseHour = 21;
-    
-        const marketOpenMinute = 30;
-    
-        if (day < 1 || day > 5) {
-          return false;
-        }
-        
-        if (hour < marketOpenHour || (hour === marketOpenHour && minute < marketOpenMinute) || hour > marketCloseHour) {
-          return false;
-        }
-        
-        return true;
-      };
-
-    const fetchData = async () => {
+    function fetchData() {
         for (let i = 0; i < props.watchlist.length; i++) {
             const symbol = props.watchlist[i]
         
@@ -51,14 +30,18 @@ export default function Watchlist(props) {
     useEffect(() => {
         fetchData();
 
-        if (marketUp()) {
+        if (marketOpen) {
             const intervalId = setInterval(fetchData, 10000);
 
             return () => clearInterval(intervalId);
         }
-    }, []);
-    
+    }, [props.watchlist]);
 
+
+    function handleSelect(symbolArray) {
+        console.log(symbolArray);
+    }
+    
     const stockCardElements = props.watchlist.map(symbol => {
         return <StockCard key={symbol} symbol={symbol} data={watchlistData.get(symbol)} handleClick={props.detailSelect}/>
     })
@@ -68,7 +51,7 @@ export default function Watchlist(props) {
             <div className="watchlistHeader">
                 <h1>Watchlist</h1>
             </div>
-            <StockSearchbar allStocks={props.allStocks} watchlist={props.watchlist} handleSelect={props.selectWatchlist} />
+            <StockSearchbar allStocks={props.allStocks} watchlist={props.watchlist} handleSelect={handleSelect} />
             <div className="watchlistBody">
                 {stockCardElements}
             </div>

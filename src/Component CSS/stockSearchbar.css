@@ -29,6 +29,7 @@
 .searchResultItems {
   padding: 10px;
   cursor: pointer;
+  display: flex;
 }
 
 .search-bar-dropdown-item:hover {
