@@ -17,19 +17,25 @@
 .searchResults {
   position: absolute;
   top: 100%;
-  left: 0;
-  width: 100%;
+  width: 80%;
+  padding: 15px;
   border: 1px solid #ccc;
   border-top: none;
   background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  border-radius: 5px;
 }
 
 .searchResultItems {
   padding: 10px;
   cursor: pointer;
   display: flex;
+  cursor: default;
+}
+
+.searchResultItems > button {
+  cursor: pointer;
 }
 
 .search-bar-dropdown-item:hover {

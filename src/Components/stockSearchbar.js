@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react"
+import React, {useRef, useState, useEffect} from "react"
 import "../Component CSS/stockSearchbar.css"
 import {searching} from "../finnhubService"
 
@@ -6,14 +6,20 @@ export default function StockSearchbar(props) {
     const [search, setSearch] = useState('')
     const [suggestions, setSuggestions] = useState([])
     const [dropdownVisible, setDropdownVisible] = useState(false);
+    const ref = useRef(null);
 
+    function handleClickOutside(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+            setDropdownVisible(false);
+        }
+    };
 
     useEffect(() => {
+        setDropdownVisible(true)
         const timeoutId = setTimeout(() => {
             if (search && search !== "") {
                 searching(search).then((data) => {
                     setSuggestions(data.slice(0, 5))
-                    setDropdownVisible(true)
                 })
             } else {
                 setSuggestions([])
@@ -29,8 +35,9 @@ export default function StockSearchbar(props) {
     }
 
     function addToSelection(event, symbol) {
-        event.stopPropagation();
+        event.stopPropagation()
         props.handleSelect([symbol])
+        setDropdownVisible(false)
     }
 
     const suggestionElements = suggestions.map((suggestion) => {
