@@ -49,7 +49,7 @@ export default function Watchlist(props) {
         fetchData();
 
         if (marketOpen) {
-            const intervalId = setInterval(fetchData, 10000);
+            const intervalId = setInterval(fetchData, 15000);
             return () => clearInterval(intervalId);
         }
     }, [watchlist]);

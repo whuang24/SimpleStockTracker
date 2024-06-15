@@ -57,4 +57,5 @@
     grid-template-columns: 1fr;
     gap: 20px 5px;
     overflow-y: auto;
+    margin-top: 20px;
 }

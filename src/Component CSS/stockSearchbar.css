@@ -11,7 +11,8 @@
   width: 80%;
   padding: 15px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 1.625rem;
+  font-size: 1rem;
 }
 
 .searchResults {
@@ -34,8 +35,24 @@
   cursor: default;
 }
 
+.searchResultTitle {
+  flex: 3;
+  text-wrap: wrap;
+  margin-right: 10px;
+}
+
+.searchResultItems > p {
+  font-size: 0.75rem;
+  word-wrap: break-word;
+  margin-left: auto;
+  flex: 1;
+  align-self: center;
+}
+
 .searchResultItems > button {
   cursor: pointer;
+  margin-left: auto;
+  flex: 1;
 }
 
 .search-bar-dropdown-item:hover {

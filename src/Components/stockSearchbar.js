@@ -6,13 +6,7 @@ export default function StockSearchbar(props) {
     const [search, setSearch] = useState('')
     const [suggestions, setSuggestions] = useState([])
     const [dropdownVisible, setDropdownVisible] = useState(false);
-    const ref = useRef(null);
-
-    function handleClickOutside(event) {
-        if (ref.current && !ref.current.contains(event.target)) {
-            setDropdownVisible(false);
-        }
-    };
+    const dropdown = useRef(null);
 
     useEffect(() => {
         setDropdownVisible(true)
@@ -42,10 +36,13 @@ export default function StockSearchbar(props) {
 
     const suggestionElements = suggestions.map((suggestion) => {
         return (
-            <div key={suggestion.symbol} className="searchResultItems">{suggestion.symbol} - {suggestion.name}
+            <div key={suggestion.symbol} className="searchResultItems">
+                <div className="searchResultTitle">{suggestion.symbol} - {suggestion.name}</div>
+                {props.watchlist.includes(suggestion.symbol) ?
+                <p>Already added to the watchlist</p> :
                 <button onClick={(event) => 
                     addToSelection(event, suggestion.symbol)
-                }>Add to Watchlist</button>
+                }>Add to Watchlist</button>}
             </div>
         )
     })
@@ -60,7 +57,7 @@ export default function StockSearchbar(props) {
                 placeholder="Search for stock symbols to add to watchlist"
             />
             {dropdownVisible && 
-                <div className="searchResults">
+                <div className="searchResults" ref={dropdown}>
                     {suggestionElements}
                 </div>
             }

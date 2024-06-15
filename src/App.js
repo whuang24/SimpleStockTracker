@@ -2,7 +2,7 @@ import './App.css';
 import Split from "react-split"
 import Watchlist from "./Components/Watchlist"
 import Details from "./Components/Details"
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 
 function App() {
   const [currStock, setCurrStock] = useState('')
@@ -18,7 +18,7 @@ function App() {
           currStock={currStock}
           detailSelect={detailSelect}
         />
-        <Details />
+        <Details currStock={currStock}/>
       </Split>
     </div>
   );
