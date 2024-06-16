@@ -11,7 +11,7 @@ library.add(fas)
 export default function Watchlist(props) {
     const [watchlist, setWatchlist] = useState([]);
     const [watchlistData, setWatchlistData] = useState(new Map());
-    const [marketOpen, setMarketOpen] = useState(false);
+    const [marketStatus, setMarketStatus] = useState(false);
 
     useEffect(() => {
         var watchlistArray = JSON.parse(localStorage.getItem("watchlistSymbols"));
@@ -46,9 +46,16 @@ export default function Watchlist(props) {
             }
         }
 
+        async function checkMarket() {
+            const marketStatus = await isMarketOpen();
+            setMarketStatus(marketStatus);
+        }
+
+        checkMarket()
+
         fetchData();
 
-        if (marketOpen) {
+        if (marketStatus) {
             const intervalId = setInterval(fetchData, 15000);
             return () => clearInterval(intervalId);
         }
