@@ -11,7 +11,7 @@ library.add(fas)
 export default function Watchlist(props) {
     const [watchlist, setWatchlist] = useState([]);
     const [watchlistData, setWatchlistData] = useState(new Map());
-    const [marketOpen, setMarketOpen] = useState(isMarketOpen());
+    const [marketOpen, setMarketOpen] = useState(false);
 
     useEffect(() => {
         var watchlistArray = JSON.parse(localStorage.getItem("watchlistSymbols"));
@@ -31,21 +31,21 @@ export default function Watchlist(props) {
         })
     }
 
-    function fetchData() {
-        for (let i = 0; i < watchlist.length; i++) {
-            const symbol = watchlist[i];
-        
-            finnhubClient.quote(symbol, (error, data, response) => {
-                setWatchlistData(oldData => {
-                    const newData = new Map(oldData)
-                    newData.set(symbol, data)
-                    return newData
-                })
-            })
-        }
-    }
-
     useEffect(() => {
+        async function fetchData() {
+            for (let i = 0; i < watchlist.length; i++) {
+                const symbol = watchlist[i];
+            
+                finnhubClient.quote(symbol, (error, data, response) => {
+                    setWatchlistData(oldData => {
+                        const newData = new Map(oldData)
+                        newData.set(symbol, data)
+                        return newData
+                    })
+                })
+            }
+        }
+
         fetchData();
 
         if (marketOpen) {
