@@ -1,17 +1,13 @@
-import React, {useState, useEffect} from "react"
+import React from "react"
 import '../Component CSS/Details.css';
 import { finnhubClient } from "../finnhubService";
 import StockChart from "./StockChart"
+import Header from "./Header"
 
-export default function Watchlist(props) {
-    const [stockBasics, setStockBasics] = useState({});
-
-    useEffect(() => {
-    }, [])
-
-
+export default function Details(props) {
     return (
         <div className="detailsContainer">
+            <Header symbol={props.currStock} removing={props.removing}/>
             <StockChart symbol={props.currStock}/>
         </div>
     )

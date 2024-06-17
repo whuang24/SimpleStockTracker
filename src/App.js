@@ -2,13 +2,38 @@ import './App.css';
 import Split from "react-split"
 import Watchlist from "./Components/Watchlist"
 import Details from "./Components/Details"
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
 function App() {
+  const [watchlist, setWatchlist] = useState([]);
   const [currStock, setCurrStock] = useState('')
-  
+
     function detailSelect(symbol) {
       setCurrStock(symbol);
+    }
+
+    useEffect(() => {
+      var watchlistArray = JSON.parse(localStorage.getItem("watchlistSymbols"));
+      setWatchlist(watchlistArray);
+    }, [])
+
+    useEffect(() => {
+      localStorage.setItem("watchlistSymbols", JSON.stringify(watchlist));
+    }, [watchlist])
+
+    function selectWatchlist(arrayOfSymbols) {
+      setWatchlist(oldWatchlist => {
+          return [
+          ...arrayOfSymbols,
+          ...oldWatchlist
+          ]
+      })
+    }
+
+    function removeFromWatchlist(symbol) {
+      setWatchlist(oldWatchlist => {
+        return oldWatchlist.filter(stockSymbol => stockSymbol !== symbol)
+      })
     }
 
   return (
@@ -17,8 +42,10 @@ function App() {
         <Watchlist
           currStock={currStock}
           detailSelect={detailSelect}
+          watchlist={watchlist}
+          selectWatchlist={selectWatchlist}
         />
-        <Details currStock={currStock}/>
+        <Details currStock={currStock} removing={removeFromWatchlist}/>
       </Split>
     </div>
   );
