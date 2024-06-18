@@ -54,7 +54,7 @@ export default function StockChart(props) {
 
 
     return (
-        <div>
+        <div className="stockChart">
             <Line data={chartData} />
         </div>
     )

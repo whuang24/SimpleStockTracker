@@ -1,0 +1,29 @@
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    color: white;
+    width: 100%;
+}
+
+.leftHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.rightHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+}
+
+.companyLogo {
+    width: 50px;
+    border-radius: 100%;
+}

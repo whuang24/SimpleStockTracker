@@ -5,17 +5,12 @@ import Details from "./Components/Details"
 import React, {useState, useEffect} from 'react'
 
 function App() {
-  const [watchlist, setWatchlist] = useState([]);
+  const [watchlist, setWatchlist] = useState(JSON.parse(localStorage.getItem("watchlistSymbols")))
   const [currStock, setCurrStock] = useState('')
 
     function detailSelect(symbol) {
       setCurrStock(symbol);
     }
-
-    useEffect(() => {
-      var watchlistArray = JSON.parse(localStorage.getItem("watchlistSymbols"));
-      setWatchlist(watchlistArray);
-    }, [])
 
     useEffect(() => {
       localStorage.setItem("watchlistSymbols", JSON.stringify(watchlist));

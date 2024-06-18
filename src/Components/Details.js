@@ -6,9 +6,14 @@ import Header from "./Header"
 
 export default function Details(props) {
     return (
-        <div className="detailsContainer">
-            <Header symbol={props.currStock} removing={props.removing}/>
-            <StockChart symbol={props.currStock}/>
+        <div className="details">
+        {props.currStock !== "" ? 
+            <div className="detailsContainer">
+                <Header symbol={props.currStock} removing={props.removing}/>
+                <StockChart symbol={props.currStock}/> 
+            </div>:
+            <h1>Please select a stock</h1>
+        }
         </div>
     )
 }

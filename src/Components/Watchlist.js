@@ -14,6 +14,7 @@ export default function Watchlist(props) {
 
     useEffect(() => {
         async function fetchData() {
+            console.log(props.watchlist);
             for (let i = 0; i < props.watchlist.length; i++) {
                 const symbol = props.watchlist[i];
             

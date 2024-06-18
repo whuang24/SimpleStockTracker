@@ -1,10 +1,18 @@
-.detailsContainer {
+.details {
     flex: 3;
-}
-
-.detailsContainer {
     padding: 20px;
     overflow-y: auto;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-  
+
+.details > h1 {
+    color: white;
+}
+
+.detailsContainer {
+    display: flex;
+    flex-direction: column;
+}
