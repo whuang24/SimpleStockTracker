@@ -24,6 +24,20 @@
 }
 
 .companyLogo {
-    width: 50px;
+    width: 75px;
     border-radius: 100%;
+    margin-right: 20px;
+}
+
+.detailSymbol {
+    font-size: 40px;
+    margin-right: 20px;
+    width: 125px;
+}
+
+.detailName {
+    font-size: 24px;
+    width: 250px;
+    text-wrap: wrap;
+    text-align: left;
 }
