@@ -21,6 +21,7 @@
     align-items: center;
     justify-content: center;
     margin-left: auto;
+    margin-right: 40px;
 }
 
 .companyLogo {
@@ -40,4 +41,34 @@
     width: 250px;
     text-wrap: wrap;
     text-align: left;
+}
+
+.detailPrice {
+    margin-right: 10px;
+}
+
+.trendBox {
+    display: flex;
+    flex-direction: row;
+    border-radius: 15px;
+    align-items: center;
+    justify-content: center;
+    max-height: 40px;
+    width: auto;
+    padding: 0px 10px;
+    flex: 1;
+    margin: 0px 10px;
+}
+
+.detailChange {
+    font-size: 18px;
+}
+
+.detailPercent {
+    font-size: 18px;
+}
+
+.trendArrow {
+    margin-right: 5px;
+    margin-left: 0px;
 }

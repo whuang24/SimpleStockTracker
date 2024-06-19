@@ -31,15 +31,6 @@ export async function getStockSymbols(exchange) {
   }
 };
 
-export async function searching(search) {
-  const response = await fetch(`https://finnhub.io/api/v1/search?q=${search}&token=${API_KEY}`);
-  const data = await response.json();
-  return data.result.map((item) => ({
-    symbol: item.symbol,
-    name: item.description
-  }));
-}
-
 export async function isMarketOpen() {
   const response = await fetch(`https://finnhub.io/api/v1/stock/market-status?exchange=US&token=${API_KEY}`);
   const data = await response.json();

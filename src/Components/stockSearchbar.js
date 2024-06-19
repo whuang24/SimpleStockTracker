@@ -1,6 +1,6 @@
 import React, {useRef, useState, useEffect} from "react"
 import "../Component CSS/stockSearchbar.css"
-import {searching} from "../finnhubService"
+import {finnhubClient, searching} from "../finnhubService"
 
 export default function StockSearchbar(props) {
     const [search, setSearch] = useState('')
@@ -9,16 +9,22 @@ export default function StockSearchbar(props) {
     const dropdown = useRef(null);
 
     useEffect(() => {
-        setDropdownVisible(true)
-        const timeoutId = setTimeout(() => {
+
+        async function searching(symbol) {
             if (search && search !== "") {
-                searching(search).then((data) => {
-                    setSuggestions(data.slice(0, 5))
+                finnhubClient.symbolSearch(symbol, (error, data, response) => {
+                    setSuggestions(data.result.slice(0, 5))
                 })
             } else {
                 setSuggestions([])
                 setDropdownVisible(false)
             }
+            
+        }
+
+        setDropdownVisible(true)
+        const timeoutId = setTimeout(() => {
+            searching(search)
         }, 500)
 
         return() => clearTimeout(timeoutId)
@@ -37,7 +43,7 @@ export default function StockSearchbar(props) {
     const suggestionElements = suggestions.map((suggestion) => {
         return (
             <div key={suggestion.symbol} className="searchResultItems">
-                <div className="searchResultTitle">{suggestion.symbol} - {suggestion.name}</div>
+                <div className="searchResultTitle">{suggestion.symbol} - {suggestion.description}</div>
                 {props.watchlist.includes(suggestion.symbol) ?
                 <p>Already added to the watchlist</p> :
                 <button onClick={(event) => 

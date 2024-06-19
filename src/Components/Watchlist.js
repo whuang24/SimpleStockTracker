@@ -14,7 +14,6 @@ export default function Watchlist(props) {
 
     useEffect(() => {
         async function fetchData() {
-            console.log(props.watchlist);
             for (let i = 0; i < props.watchlist.length; i++) {
                 const symbol = props.watchlist[i];
             
@@ -42,7 +41,7 @@ export default function Watchlist(props) {
             const intervalId = setInterval(fetchData, 15000);
             return () => clearInterval(intervalId);
         }
-    }, []);
+    }, [props.watchlist]);
     
     const stockCardElements = props.watchlist.map(symbol => {
         return <StockCard key={symbol} symbol={symbol} data={watchlistData.get(symbol)} handleClick={props.detailSelect}/>

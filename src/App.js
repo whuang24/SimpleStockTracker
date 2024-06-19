@@ -29,6 +29,8 @@ function App() {
       setWatchlist(oldWatchlist => {
         return oldWatchlist.filter(stockSymbol => stockSymbol !== symbol)
       })
+
+      setCurrStock('')
     }
 
   return (

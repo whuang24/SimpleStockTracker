@@ -5,6 +5,7 @@ import StockChart from "./StockChart"
 import Header from "./Header"
 
 export default function Details(props) {
+
     return (
         <div className="details">
         {props.currStock !== "" ? 
