@@ -1,0 +1,21 @@
+.infoContainer {
+    flex: 2;
+    border-radius: 5px;
+    background-color: #31363F;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 0px 20px;
+    color: white;
+}
+
+.infoContainer > div {
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.statHolder {
+    height: 100%;
+    justify-content: center;
+}
