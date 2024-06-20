@@ -6,40 +6,62 @@ export default function StockInfo(props) {
     const [marketStatus, setMarketStatus] = useState(false)
     const [stockStats, setStockStats] = useState(new Map().set("Exchange", "NASDAQ"))
 
+    async function fetchStats() {
+        return new Promise((resolve, reject) => {
+            finnhubClient.quote(props.symbol, (error, data, response) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(data);
+                }
+            })
+        })
+    }
+
+    async function fetchFinancials() {
+        return new Promise((resolve, reject) => {
+            finnhubClient.companyBasicFinancials(props.symbol, "all", (error, data, response) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(data);
+                }
+            })
+        })
+    }
+
+    function roundTo4(num) {
+        return Math.round(num * 10000) / 10000
+    }
+
     useEffect(() => {
 
-        function roundTo4(num) {
-            return Math.round(num * 10000) / 10000
-        }
-
         async function updateStats() {
-            finnhubClient.quote(props.symbol, (error, data, response) => {
+            const quoteData = await fetchStats();
                 setStockStats(oldStats => {
                     const newStats = new Map(oldStats);
-                    newStats.set("Price", data.c)
-                            .set("Opening Price", data.o)
-                            .set("Low", data.l)
-                            .set("High", data.h)
-
-                    return newStats
-                })
-            })
-    
-            finnhubClient.companyBasicFinancials(props.symbol, "all", (error, data, response) => {
-                const peRatio = roundTo4(stockStats.get("Price") / data.metric.epsInclExtraItemsTTM)
-                setStockStats(oldStats => {
-                    const newStats = new Map(oldStats);
-                    newStats.set("52W Low", data.metric['52WeekLow'])
-                            .set("52W High", data.metric['52WeekHigh'])
-                            .set("Market Cap", roundTo4(data.metric.marketCapitalization))
-                            .set("P/E Ratio", peRatio)
-                            .set("Yield", roundTo4(data.metric.dividendYieldIndicatedAnnual))
-                            .set("Company Value", roundTo4(data.metric.enterpriseValue))
-                    
+                    newStats.set("Price", quoteData.c)
+                        .set("Opening Price", quoteData.o)
+                        .set("Low", quoteData.l)
+                        .set("High", quoteData.h);
                     return newStats;
-                })
-            })
+                });
+
+                const financialData = await fetchFinancials();
+                setStockStats(oldStats => {
+                    const currentPrice = quoteData.c;
+                    const peRatio = roundTo4(currentPrice / financialData.metric.epsInclExtraItemsTTM);
+                    const newStats = new Map(oldStats);
+                    newStats.set("52W Low", financialData.metric['52WeekLow'])
+                        .set("52W High", financialData.metric['52WeekHigh'])
+                        .set("Market Cap", roundTo4(financialData.metric.marketCapitalization))
+                        .set("P/E Ratio", peRatio)
+                        .set("Yield", roundTo4(financialData.metric.dividendYieldIndicatedAnnual))
+                        .set("Company Value", roundTo4(financialData.metric.enterpriseValue));
+                    return newStats;
+                });
         }
+
 
         async function checkMarket() {
             const marketStatus = await isMarketOpen();
@@ -56,6 +78,8 @@ export default function StockInfo(props) {
             return () => clearInterval(intervalId);
         }
     }, [props.symbol])
+    
+    console.log(stockStats)
 
     const statElements = Array.from(stockStats.entries()).map(([key, value]) => {
         return <div><p className="statHolder">{key}: {value}</p></div>
