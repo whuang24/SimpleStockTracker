@@ -1,26 +1,24 @@
-import React from 'react'
+import React, {useState} from 'react'
 import "../Component CSS/NewsCard.css"
 
 export default function NewsCard(props) {
-    console.log(props);
+    const [news, SetNews] = useState(props.news);
 
     function formatDate(timestamp) {
         const date = new Date(timestamp * 1000);
-        console.log(date);
-        // return date.toLocaleString();
-        console.log(date.toLocaleString());
+        return date.toLocaleString();
     };
 
     return (
-        <a className="newsCard" href={props.url} >
-            <img src={props.image} alt={props.headline}/>
+        <a className="newsCard" href={news.url} >
+            <img src={props.image} alt={news.headline}/>
             <div className="newsInfo">
                 <div className="source">
-                    <p>{props.source}</p>
-                    <p>{formatDate(props.datetime)}</p>
+                    <p>{news.source}</p>
+                    <p>{formatDate(news.datetime)}</p>
                 </div>
-                <h3 className="title">{props.headline}</h3>
-                <p className="summary">{props.summary}</p>
+                <h3 className="title">{news.headline}</h3>
+                <p className="summary">{news.summary}</p>
             </div>
         </a>
     )    
