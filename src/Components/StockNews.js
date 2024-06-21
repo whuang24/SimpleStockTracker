@@ -4,7 +4,7 @@ import NewsCard from "./NewsCard.js"
 
 export default function StockNews(props) {
     const [stockNews, setStockNews] = useState([])
-    const [marketStatus, setMarketStatus] = useState([])
+    const [marketStatus, setMarketStatus] = useState(false)
 
     async function fetchNews() {
         const today = new Date().toLocaleDateString('en-CA')
@@ -40,10 +40,10 @@ export default function StockNews(props) {
             const intervalId = setInterval(updateNews, 15000)
             return () => clearInterval(intervalId)
         }
-    })
+    }, [])
 
-    const newsElements = stockNews.map((news) => {
-        return <NewsCard news={news} />;
+    const newsElements = stockNews.map(news => {
+        return <NewsCard key={news.id} news={news} />;
     })
 
 

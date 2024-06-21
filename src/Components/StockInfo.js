@@ -78,11 +78,11 @@ export default function StockInfo(props) {
             return () => clearInterval(intervalId)
         }
     }, [props.symbol])
-    
-    console.log(stockStats)
 
-    const statElements = Array.from(stockStats.entries()).map(([key, value]) => {
-        return <div><p className="statHolder">{key}: {value}</p></div>
+    const statElements = Array.from(stockStats.entries()).map(([key, value], index) => {
+        return <div key={key}>
+                <p className="statHolder">{key}: {value}</p>
+            </div>
     })
 
     return (
