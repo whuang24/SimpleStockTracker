@@ -4,6 +4,7 @@ import { finnhubClient } from "../finnhubService";
 import StockChart from "./StockChart"
 import Header from "./Header"
 import StockInfo from "./StockInfo"
+import StockNews from "./StockNews"
 
 export default function Details(props) {
 
@@ -14,6 +15,7 @@ export default function Details(props) {
                 <Header symbol={props.currStock} removing={props.removing}/>
                 <StockChart symbol={props.currStock}/> 
                 <StockInfo symbol={props.currStock} />
+                <StockNews symbol={props.currStock} />
             </div>:
             <h1>Please select a stock</h1>
         }

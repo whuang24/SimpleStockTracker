@@ -64,18 +64,18 @@ export default function StockInfo(props) {
 
 
         async function checkMarket() {
-            const marketStatus = await isMarketOpen();
-            setMarketStatus(marketStatus);
+            const marketStatus = await isMarketOpen()
+            setMarketStatus(marketStatus)
         }
 
-        checkMarket();
-        console.log(marketStatus);
+        checkMarket()
+        console.log(marketStatus)
 
-        updateStats();
+        updateStats()
 
         if (marketStatus) {
-            const intervalId = setInterval(updateStats, 15000);
-            return () => clearInterval(intervalId);
+            const intervalId = setInterval(updateStats, 15000)
+            return () => clearInterval(intervalId)
         }
     }, [props.symbol])
     
