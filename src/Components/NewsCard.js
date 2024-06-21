@@ -2,10 +2,13 @@ import React from 'react'
 import "../Component CSS/NewsCard.css"
 
 export default function NewsCard(props) {
+    console.log(props);
 
-    const formatDate = (timestamp) => {
-        const date = new Date(timestamp * 1000); // Convert seconds to milliseconds
-        return date.toLocaleString(); // Returns date and time as a string
+    function formatDate(timestamp) {
+        const date = new Date(timestamp * 1000);
+        console.log(date);
+        // return date.toLocaleString();
+        console.log(date.toLocaleString());
     };
 
     return (

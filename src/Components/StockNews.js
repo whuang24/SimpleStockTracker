@@ -40,7 +40,7 @@ export default function StockNews(props) {
             const intervalId = setInterval(updateNews, 15000)
             return () => clearInterval(intervalId)
         }
-    }, [])
+    }, [props.symbol])
 
     const newsElements = stockNews.map(news => {
         return <NewsCard key={news.id} news={news} />;
