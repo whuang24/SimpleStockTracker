@@ -21,11 +21,11 @@ export default function NewsCard({news}) {
                 </div>}
                 <div className="newsInfo">
                     <div className="source">
-                        <p>{news.source}</p>
+                        <p className="sourceName">{news.source}</p>
+                        <p>-</p>
                         <p className="timeDiff">{timeDifference(news.datetime)} hours ago</p>
                     </div>
                     <h3 className="title">{news.headline}</h3>
-                    <p className="summary">{news.summary}</p>
                 </div>
             </a>
         </div>
