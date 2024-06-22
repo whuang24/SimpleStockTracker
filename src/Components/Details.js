@@ -1,6 +1,5 @@
 import React from "react"
 import '../Component CSS/Details.css';
-import { finnhubClient } from "../finnhubService";
 import StockChart from "./StockChart"
 import Header from "./Header"
 import StockInfo from "./StockInfo"

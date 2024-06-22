@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { finnhubClient, isMarketOpen } from '../finnhubService'
 import NewsCard from "./NewsCard.js"
+import "../Component CSS/StockNews.css"
 
 export default function StockNews(props) {
     const [stockNews, setStockNews] = useState([])
@@ -43,7 +44,7 @@ export default function StockNews(props) {
     }, [props.symbol])
 
     const newsElements = stockNews.map(news => {
-        return <NewsCard key={news.id} news={news} />;
+        return <NewsCard key={news.id} news={news}/>;
     })
 
 
