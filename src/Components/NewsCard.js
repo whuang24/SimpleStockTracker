@@ -10,7 +10,12 @@ export default function NewsCard({news}) {
 
         const difference = now - time;
         const differenceInHours = Math.floor(difference / (1000 * 60 * 60));
-        return differenceInHours
+
+        if (differenceInHours > 24) {
+            return `${Math.floor(differenceInHours / 24)} days ago`
+        } else {
+            return `${differenceInHours} hours ago`
+        }
     };
 
     return (
@@ -23,7 +28,7 @@ export default function NewsCard({news}) {
                     <div className="source">
                         <p className="sourceName">{news.source}</p>
                         <p>-</p>
-                        <p className="timeDiff">{timeDifference(news.datetime)} hours ago</p>
+                        <p className="timeDiff">{timeDifference(news.datetime)}</p>
                     </div>
                     <h3 className="title">{news.headline}</h3>
                 </div>

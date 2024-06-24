@@ -4,7 +4,7 @@ import { finnhubClient, isMarketOpen } from '../finnhubService'
 
 export default function StockInfo(props) {
     const [marketStatus, setMarketStatus] = useState(false)
-    const [stockStats, setStockStats] = useState(new Map().set("Exchange", "NASDAQ"))
+    const [stockStats, setStockStats] = useState(new Map())
 
     async function fetchStats() {
         return new Promise((resolve, reject) => {
@@ -31,7 +31,7 @@ export default function StockInfo(props) {
     }
 
     function roundTo4(num) {
-        return Math.round(num * 10000) / 10000
+        return Math.round(num * 100) / 100
     }
 
     useEffect(() => {
@@ -42,8 +42,7 @@ export default function StockInfo(props) {
                     const newStats = new Map(oldStats);
                     newStats.set("Price", quoteData.c)
                         .set("Opening Price", quoteData.o)
-                        .set("Low", quoteData.l)
-                        .set("High", quoteData.h);
+                        .set("Day Range", `$${quoteData.l} - $${quoteData.h}`)
                     return newStats;
                 });
 
@@ -52,11 +51,10 @@ export default function StockInfo(props) {
                     const currentPrice = quoteData.c;
                     const peRatio = roundTo4(currentPrice / financialData.metric.epsInclExtraItemsTTM);
                     const newStats = new Map(oldStats);
-                    newStats.set("52W Low", financialData.metric['52WeekLow'])
-                        .set("52W High", financialData.metric['52WeekHigh'])
-                        .set("Market Cap", roundTo4(financialData.metric.marketCapitalization))
+                    newStats.set("52W Range", `$${financialData.metric['52WeekLow']} - $${financialData.metric['52WeekHigh']}`)
+                        .set("Yield", `${roundTo4(financialData.metric.dividendYieldIndicatedAnnual)}%`)
                         .set("P/E Ratio", peRatio)
-                        .set("Yield", roundTo4(financialData.metric.dividendYieldIndicatedAnnual))
+                        .set("Market Cap", roundTo4(financialData.metric.marketCapitalization))
                         .set("Company Value", roundTo4(financialData.metric.enterpriseValue));
                     return newStats;
                 });
@@ -80,10 +78,13 @@ export default function StockInfo(props) {
     }, [props.symbol])
 
     const statElements = Array.from(stockStats.entries()).map(([key, value], index) => {
-        return <div key={key}>
-                <p className="statHolder">{key}: {value}</p>
-            </div>
+        return <div className="statHolder" key={key}>
+                    <p className="statTitle">{key}</p>
+                    <p className="stat">{value}</p>
+                </div>
     })
+
+    console.log(statElements);
 
     return (
         <div className="infoContainer">

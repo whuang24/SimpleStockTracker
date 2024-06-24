@@ -8,10 +8,15 @@ export default function StockNews(props) {
     const [marketStatus, setMarketStatus] = useState(false)
 
     async function fetchNews() {
-        const today = new Date().toLocaleDateString('en-CA')
+        const today = new Date()
+        const pastDate = new Date();
+        pastDate.setDate(today.getDate() - 3);
+        
+        const todayString = today.toLocaleDateString('en-CA')
+        const pastString = pastDate.toLocaleDateString('en-CA')
 
         return new Promise((resolve, reject) => {
-            finnhubClient.companyNews(props.symbol, today, today, (error, data, response) => {
+            finnhubClient.companyNews(props.symbol, pastString, todayString, (error, data, response) => {
                 if (error) {
                     reject(error)
                 } else {
@@ -24,7 +29,7 @@ export default function StockNews(props) {
     useEffect(() => {
         async function updateNews() {
             const newsData = await fetchNews()
-            setStockNews(newsData)
+            setStockNews(newsData.slice(0, 10))
         }
 
         async function checkMarket() {

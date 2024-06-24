@@ -5,17 +5,25 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(2, auto);
+    grid-auto-flow: column;
     gap: 0px 20px;
     color: white;
-}
-
-.infoContainer > div {
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+    padding: 0px 20px;
 }
 
 .statHolder {
     height: 100%;
-    justify-content: center;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.statTitle {
+    align-self: flex-start;
+}
+
+.stat {
+    align-self: flex-end;
 }
