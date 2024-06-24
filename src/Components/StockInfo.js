@@ -30,7 +30,7 @@ export default function StockInfo(props) {
         })
     }
 
-    function roundTo4(num) {
+    function roundTo2(num) {
         return Math.round(num * 100) / 100
     }
 
@@ -40,22 +40,30 @@ export default function StockInfo(props) {
             const quoteData = await fetchStats();
                 setStockStats(oldStats => {
                     const newStats = new Map(oldStats);
-                    newStats.set("Price", quoteData.c)
-                        .set("Opening Price", quoteData.o)
+                    newStats.set("Price", `$${quoteData.c}`)
+                        .set("Opening Price", `$${quoteData.o}`)
                         .set("Day Range", `$${quoteData.l} - $${quoteData.h}`)
                     return newStats;
                 });
 
                 const financialData = await fetchFinancials();
+                var marketCap = 
+                    financialData.metric.marketCapitalization > 1000000 ? 
+                        `${roundTo2(financialData.metric.marketCapitalization / 1000)}B USD` :
+                        `${roundTo2(financialData.metric.marketCapitalization)}M USD`;
+                var enterpriseVal = 
+                    financialData.metric.enterpriseValue > 1000000 ? 
+                        `${roundTo2(financialData.metric.enterpriseValue / 1000)}B USD` :
+                        `${roundTo2(financialData.metric.enterpriseValue)}M USD`;
                 setStockStats(oldStats => {
                     const currentPrice = quoteData.c;
-                    const peRatio = roundTo4(currentPrice / financialData.metric.epsInclExtraItemsTTM);
+                    const peRatio = roundTo2(currentPrice / financialData.metric.epsInclExtraItemsTTM);
                     const newStats = new Map(oldStats);
                     newStats.set("52W Range", `$${financialData.metric['52WeekLow']} - $${financialData.metric['52WeekHigh']}`)
-                        .set("Yield", `${roundTo4(financialData.metric.dividendYieldIndicatedAnnual)}%`)
+                        .set("Yield", `${roundTo2(financialData.metric.dividendYieldIndicatedAnnual)}%`)
                         .set("P/E Ratio", peRatio)
-                        .set("Market Cap", roundTo4(financialData.metric.marketCapitalization))
-                        .set("Company Value", roundTo4(financialData.metric.enterpriseValue));
+                        .set("Market Cap", marketCap)
+                        .set("Company Value", enterpriseVal);
                     return newStats;
                 });
         }
