@@ -1,6 +1,7 @@
 import React, {useRef, useState, useEffect} from "react"
 import "../Component CSS/stockSearchbar.css"
-import {finnhubClient, searching} from "../finnhubService"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {finnhubClient} from "../finnhubService"
 
 export default function StockSearchbar(props) {
     const [search, setSearch] = useState('')
@@ -55,12 +56,13 @@ export default function StockSearchbar(props) {
 
     return (
         <div className="searchbar">
+            <FontAwesomeIcon icon="fas fa-search" className="searchIcon"/>
             <input
                 type="text"
                 value={search}
                 onChange={handleSearch}
                 className="stockSearch"
-                placeholder="Search for stock symbols to add to watchlist"
+                placeholder="Search for stock symbols"
             />
             {dropdownVisible && 
                 <div className="searchResults" ref={dropdown}>

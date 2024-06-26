@@ -3,16 +3,30 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 80%;
   position: relative;
+  padding: 1rem;
+  background-color: #2F2F2F;
+  border-radius: 1.625rem;
+  margin-left: 2rem;
 }
 
 .stockSearch {
-  width: 80%;
-  padding: 15px;
-  border: 1px solid #ccc;
-  border-radius: 1.625rem;
+  width: 100%;
+  border: none;
+  outline: none;
+  margin-left: 0.75rem;
+  background-color: transparent;
   font-size: 1rem;
+  color: rgba(235, 235, 235, 0.8);
+}
+
+.stockSearch:focus {
+  caret-color: rgba(235, 235, 235, 0.8);
+}
+
+.searchIcon {
+  color: rgba(235, 235, 235, 0.8);
 }
 
 .searchResults {
