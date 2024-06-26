@@ -96,7 +96,7 @@ export default function Header(props) {
             <div className="rightHeader">
                 <h2 className="detailPrice">${stockBasics.currPrice}</h2>
                 <p className="detailChange" style={style}>{stockBasics.currChange}</p>
-                <div className="trendBox" style={trendBoxStyle}>
+                <div className="headerTrendBox" style={trendBoxStyle}>
                     {stockBasics && (stockBasics.currChange >= 0?
                         <FontAwesomeIcon icon="fa-solid fa-arrow-up" className="trendArrow"/> :
                         <FontAwesomeIcon icon="fa-solid fa-arrow-down" className="trendArrow"/>)

@@ -1,48 +1,61 @@
 .stockCard {
-    background-color: #31363F;
+    background-color: #454343;
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 100%;
-    height: 100px;
-    border-radius: 15px;
+    width: 24rem;
+    height: 6rem;
+    border-radius: 1rem;
 }
 
 .cardSymbol {
-    color: white;
+    color: rgba(235, 235, 235, 0.9);
     flex: 1;
+    text-align: left;
+    margin-left: 2rem;
 }
 
-.trendBox {
+.pricingSection {
+    flex: 2;
     display: flex;
-    flex-direction: row;
-    border-radius: 15px;
-    align-items: center;
-    justify-content: center;
-    max-height: 40px;
-    width: auto;
-    padding: 0px 10px;
-    flex: 1;
-    margin: 0px 10px;
-}
-
-.trendArrow {
-    color: white;
-    margin-left: 10px
-}
-
-.trendBox > h4 {
-    color: white;
+    flex-direction: column;
+    margin: 0rem 2rem;
 }
 
 .cardPrice {
-    color: white;
     flex: 1;
+    color: rgba(235, 235, 235, 0.9);
+    text-align: right;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    font-size: 1.1rem;
 }
 
 .cardPrice > sub {
+    font-size: 1rem;
     vertical-align: middle;
-    font-weight: 200;
+    font-weight: 300;
     color: #9aa0a6;
-    margin-left: 5px;
+    margin-left: 0.25rem;
+}
+
+.watchlistTrendBox {
+    flex: 1;
+    display: flex;
+    width: 5rem;
+    align-self: flex-end;
+    border-radius: 0.5rem;
+    align-items: center;
+    padding: 0rem 1rem;
+    justify-content: center;
+}
+
+.watchlistTrendArrow {
+    color: rgba(235, 235, 235, 0.9);
+}
+
+.watchlistTrendBox > p {
+    font-weight: 400;
+    color: rgba(235, 235, 235, 0.9);
+    margin: 0;
 }

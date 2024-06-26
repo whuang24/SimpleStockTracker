@@ -47,7 +47,7 @@
     margin-right: 10px;
 }
 
-.trendBox {
+.headerTrendBox {
     display: flex;
     flex-direction: row;
     border-radius: 15px;
