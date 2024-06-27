@@ -104,7 +104,7 @@ export default function Header(props) {
                     Watchlist</button>
             </div>
             <div className="lowerHeader">
-                <h2 className="detailPrice">${stockBasics.currPrice}</h2>
+                <p className="detailPrice">${stockBasics.currPrice}</p>
                 <p className="detailChange" style={style}>{stockBasics.currChange}</p>
                 <div className="headerTrendBox" style={trendBoxStyle}>
                     {stockBasics && (stockBasics.currChange >= 0?
