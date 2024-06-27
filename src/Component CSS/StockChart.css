@@ -1,4 +1,5 @@
 .stockChart {
     flex: 2;
-    height: 150px;
+    width: 100%;
+    height: 20rem;
 }
