@@ -52,6 +52,7 @@
 
 .watchlistTrendArrow {
     color: rgba(235, 235, 235, 0.9);
+    margin-right: 0.5rem;
 }
 
 .watchlistTrendBox > p {

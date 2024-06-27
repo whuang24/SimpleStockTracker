@@ -25,6 +25,7 @@ export default function Watchlist(props) {
                     })
                 })
             }
+            console.log(watchlistData);
         }
 
         async function checkMarket() {

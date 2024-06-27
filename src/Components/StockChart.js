@@ -6,7 +6,6 @@ import { finnhubClient, isMarketOpen } from "../finnhubService";
 
 export default function StockChart(props) {
     const [marketOpen, setMarketOpen] = useState(false)
-    const [currStock, setCurrStock] = useState(props.symbol)
     const [chartData, setChartData] = useState({
         labels: [],
         datasets: [
@@ -23,7 +22,7 @@ export default function StockChart(props) {
         async function fetchCurrStockData() {
             const currTime = new Date().toLocaleTimeString();
     
-            finnhubClient.quote(currStock, (error, data, response) => {
+            finnhubClient.quote(props.currStock, (error, data, response) => {
                 setChartData(prevData => {
                     return {
                         ...prevData,
@@ -44,13 +43,14 @@ export default function StockChart(props) {
             setMarketOpen(marketStatus);
         }
 
-        checkMarket()
+        checkMarket();
+        console.log(marketOpen);
 
         if (marketOpen) {
             const intervalId = setInterval(fetchCurrStockData, 15000);
             return () => clearInterval(intervalId);
         }
-    }, []);
+    }, [props.currStock]);
 
 
     return (

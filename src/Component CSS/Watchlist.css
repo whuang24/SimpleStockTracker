@@ -33,17 +33,15 @@
 
 .watchlistBody:hover {
   overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: white transparent;
 }
 
 .watchlistBody::-webkit-scrollbar {
-  width: 1em;
+  width: 0.3rem;
 }
 
 .watchlistBody::-webkit-scrollbar-thumb {
-  background-color: white;
-  border-radius: 1em;
+  background-color: rgba(177, 177, 177, 0.2);
+  border-radius: 1rem;
 }
 
 .watchlistBody::-webkit-scrollbar-track {

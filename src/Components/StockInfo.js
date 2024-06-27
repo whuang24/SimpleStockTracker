@@ -92,8 +92,6 @@ export default function StockInfo(props) {
                 </div>
     })
 
-    console.log(statElements);
-
     return (
         <div className="infoContainer">
             {statElements}
