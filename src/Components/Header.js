@@ -16,6 +16,15 @@ export default function Header(props) {
         return Math.round(num * 100) / 100
     }
 
+    async function checkMarket() {
+        const marketStatus = await isMarketOpen();
+        setMarketStatus(marketStatus);
+    }
+
+    useEffect(() => {
+        checkMarket();
+    }, [])
+
     useEffect(() => {
         setStockBasics(oldData => {
             return {
@@ -49,22 +58,16 @@ export default function Header(props) {
             })
         }
 
-        async function checkMarket() {
-            const marketStatus = await isMarketOpen();
-            setMarketStatus(marketStatus);
-        }
-
-        checkMarket();
-        console.log(marketStatus);
-
         fetchData();
 
+        checkMarket()
+
         if (marketStatus) {
-            const intervalId = setInterval(fetchData, 15000);
+            const intervalId = setInterval(fetchData, 20000);
             return () => clearInterval(intervalId);
         }
 
-    }, [props.symbol])
+    }, [props.symbol, marketStatus])
 
     var style = {}
     var trendBoxStyle = {}

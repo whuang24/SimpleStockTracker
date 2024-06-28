@@ -30,9 +30,18 @@ export default function StockInfo(props) {
         })
     }
 
+    async function checkMarket() {
+        const marketStatus = await isMarketOpen();
+        setMarketStatus(marketStatus);
+    }
+
     function roundTo2(num) {
         return Math.round(num * 100) / 100
     }
+
+    useEffect(() => {
+        checkMarket();
+    }, [])
 
     useEffect(() => {
 
@@ -68,22 +77,13 @@ export default function StockInfo(props) {
                 });
         }
 
-
-        async function checkMarket() {
-            const marketStatus = await isMarketOpen()
-            setMarketStatus(marketStatus)
-        }
-
-        checkMarket()
-        console.log(marketStatus)
-
         updateStats()
 
         if (marketStatus) {
-            const intervalId = setInterval(updateStats, 15000)
+            const intervalId = setInterval(updateStats, 20000)
             return () => clearInterval(intervalId)
         }
-    }, [props.symbol])
+    }, [props.symbol, marketStatus])
 
     const statElements = Array.from(stockStats.entries()).map(([key, value], index) => {
         return <div className="statHolder" key={key}>
