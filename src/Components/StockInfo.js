@@ -50,7 +50,7 @@ export default function StockInfo(props) {
                 setStockStats(oldStats => {
                     const newStats = new Map(oldStats);
                     newStats.set("Price", `$${quoteData.c}`)
-                        .set("Opening Price", `$${quoteData.o}`)
+                        .set("Open", `$${quoteData.o}`)
                         .set("Day Range", `$${quoteData.l} - $${quoteData.h}`)
                     return newStats;
                 });
@@ -78,7 +78,7 @@ export default function StockInfo(props) {
         }
 
         updateStats()
-
+ 
         if (marketStatus) {
             const intervalId = setInterval(updateStats, 20000)
             return () => clearInterval(intervalId)
@@ -93,8 +93,12 @@ export default function StockInfo(props) {
     })
 
     return (
-        <div className="infoContainer">
-            {statElements}
+        <div className="stockStats">
+            <p>Key Stats</p>
+            <div className="infoContainer">
+                {statElements}
+            </div>
         </div>
+        
     )
 }

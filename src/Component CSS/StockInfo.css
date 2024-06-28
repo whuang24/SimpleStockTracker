@@ -1,14 +1,21 @@
-.infoContainer {
+.stockStats {
     flex: 2;
-    border-radius: 5px;
-    background-color: #31363F;
+}
+
+.stockStats > p {
+    color: rgba(235, 235, 235, 0.9);
+    text-align: left;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.infoContainer {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, auto);
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, auto);
     grid-auto-flow: column;
-    gap: 0px 20px;
+    gap: 0rem 3rem;
     color: white;
-    padding: 10px 20px;
 }
 
 .statHolder {
@@ -21,25 +28,13 @@
     position: relative;
 }
 
-.statHolder::before {
-    content: "";
-    background-color: gray;
-    position: absolute;
-    width: 2px; /*Width of the pseudo element, aka width of the bar */
-    height: 100%; /*Height of the pseudo element, aka the total height of the bar*/
-    top: 0; /* Top offset amounts */
-    left: -10px; /* Left offset amounts */
-}
-
-.statHolder:first-child::before,
-.statHolder:nth-child(2)::before {
-    display: none;
-}
-
 .statTitle {
     align-self: flex-start;
+    font-weight: 500;
 }
 
 .stat {
     align-self: flex-end;
+    color: rgba(235, 235, 235, 0.9);
+    font-weight: 200;
 }
