@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react"
 import "../Component CSS/StockChart.css"
 import { Line } from 'react-chartjs-2';
+import { Chart } from 'react-google-charts'
 import 'chart.js/auto'
 import { finnhubClient, isMarketOpen } from "../finnhubService";
 import { onSnapshot, doc, setDoc } from "firebase/firestore";
@@ -19,6 +20,11 @@ export default function StockChart(props) {
             }
         ]
     });
+
+    const options = {
+        legend: 'none',
+        
+    }
 
     async function checkMarket() {
         const marketStatus = await isMarketOpen()

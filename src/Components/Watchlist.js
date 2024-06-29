@@ -4,7 +4,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import '../Component CSS/Watchlist.css'
 import StockCard from './StockCard'
 import StockSearchbar from './stockSearchbar'
-import { finnhubClient, isMarketOpen, getStockSymbols } from "../finnhubService"
+import { finnhubClient, isMarketOpen} from "../finnhubService"
 
 library.add(fas)
 
