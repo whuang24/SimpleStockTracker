@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react"
 import "../Component CSS/StockChart.css"
-import { Line } from 'react-chartjs-2';
 import { Chart } from 'react-google-charts'
 import 'chart.js/auto'
 import { finnhubClient, isMarketOpen } from "../finnhubService";
@@ -9,22 +8,9 @@ import { graphDataCollection, db } from "../firebase";
 
 export default function StockChart(props) {
     const [marketStatus, setmarketStatus] = useState(false)
-    const [chartData, setChartData] = useState({
-        labels: [],
-        datasets: [
-            {
-                label: `${props.symbol} Stock Price`,
-                data: [],
-                borderColor: 'rgba(75, 192, 192, 1)',
-                fill: false,
-            }
-        ]
-    });
-
-    const options = {
-        legend: 'none',
-        
-    }
+    const [chartData, setChartData] = useState([
+        ['Price', 'Time']
+    ]);
 
     async function checkMarket() {
         const marketStatus = await isMarketOpen()
@@ -33,6 +19,11 @@ export default function StockChart(props) {
 
     useEffect(() => {
         checkMarket();
+        const unsubscribeListener = onSnapshot(graphDataCollection, function(snapshot) {
+            console.log("listener successfully subscribed")
+        })
+
+        return unsubscribeListener;
     }, [])
 
     useEffect(() => {
@@ -51,22 +42,8 @@ export default function StockChart(props) {
         async function fetchCurrStockData() {
             const currTime = new Date().toLocaleTimeString();
             finnhubClient.quote(props.symbol, (error, data, response) => {
-                setChartData(prevData => {
-                    return {
-                        ...prevData,
-                        labels: [...prevData.labels, currTime],
-                        datasets: [
-                            {
-                                ...prevData.datasets[0],
-                                data: [...prevData.datasets[0].data, data.c],
-                            }
-                        ]
-                    }
-                })
-
                 syncWithDatabase(currTime, data.c);
             })
-
         }
 
         fetchCurrStockData()
@@ -81,7 +58,7 @@ export default function StockChart(props) {
 
     return (
         <div className="stockChart">
-            <Line data={chartData} />
+            <Chart chartType="LineChart" data={chartData} />
         </div>
     )
 }
