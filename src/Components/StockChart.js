@@ -20,7 +20,10 @@ export default function StockChart(props) {
     useEffect(() => {
         checkMarket();
         const unsubscribeListener = onSnapshot(graphDataCollection, function(snapshot) {
-            console.log("listener successfully subscribed")
+            const dataArray = snapshot.docs.map(doc => ({
+                ...doc.data(),
+            }))
+            console.log(dataArray);
         })
 
         return unsubscribeListener;
