@@ -20,8 +20,25 @@ export default function StockChart(props) {
     useEffect(() => {
         checkMarket();
         const unsubscribeListener = onSnapshot(graphDataCollection, function(snapshot) {
-            console.log("listener successfully subscribed")
+            const dataArray = snapshot.docs.filter(doc => (doc.id === props.symbol)).map(doc => ({
+                ...doc.data().graphData
+            }))[0];
+
+            for (const key in dataArray) {
+                if (dataArray.hasOwnProperty(key)) {
+                    var nestedObject = dataArray[key];
+
+                    setChartData(oldData => {
+                        return [
+                            ...oldData,
+                            [nestedObject.price, nestedObject.time]
+                        ]
+                    })
+                }
+            }
         })
+
+        console.log(chartData)
 
         return unsubscribeListener;
     }, [])
