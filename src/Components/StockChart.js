@@ -9,8 +9,19 @@ import { graphDataCollection, db } from "../firebase";
 export default function StockChart(props) {
     const [marketStatus, setmarketStatus] = useState(false)
     const [chartData, setChartData] = useState([
-        ['Price', 'Time']
+        ['Time', 'Price']
     ]);
+
+    const estOptions = {
+        timeZone: 'America/New_York',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+    }
 
     async function checkMarket() {
         const marketStatus = await isMarketOpen()
@@ -28,17 +39,18 @@ export default function StockChart(props) {
                 if (dataArray.hasOwnProperty(key)) {
                     var nestedObject = dataArray[key];
 
+                    var formatter = new Intl.DateTimeFormat('en-US', estOptions);
+                    var formattedDate = formatter.format(new Date(nestedObject.time));
+
                     setChartData(oldData => {
                         return [
                             ...oldData,
-                            [nestedObject.price, nestedObject.time]
+                            [formattedDate, nestedObject.price]
                         ]
                     })
                 }
             }
         })
-
-        console.log(chartData)
 
         return unsubscribeListener;
     }, [])
@@ -57,7 +69,7 @@ export default function StockChart(props) {
         }
 
         async function fetchCurrStockData() {
-            const currTime = new Date().toLocaleTimeString();
+            const currTime = Date.now();
             finnhubClient.quote(props.symbol, (error, data, response) => {
                 syncWithDatabase(currTime, data.c);
             })
