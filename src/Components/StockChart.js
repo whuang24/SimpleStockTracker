@@ -12,15 +12,36 @@ export default function StockChart(props) {
         ['Time', 'Price']
     ]);
 
+    const chartOptions = {
+        legend: 'none',
+        backgroundColor: '#1F2023',
+        vAxis: {
+            textStyle: {
+                color: "#FFFFFF"
+            },
+        },
+        hAxis: {
+            textStyle: {
+                color: "#FFFFFF"
+            },
+            ticks: [
+                [9, 0, 0, 0],
+                [12, 0, 0, 0],
+                [15, 0, 0, 0],
+                [18, 0, 0, 0], //Current problem: need to convert the loaded data into timeOfDay objects rather than just leaving them as Date objects
+                [21, 0, 0, 0],
+                [24, 0, 0, 0]
+            ],
+            format: 'h:mm a',
+        }
+    };
+
     const estOptions = {
         timeZone: 'America/New_York',
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
-        hour12: true
+        hour12: true,
     }
 
     async function checkMarket() {
@@ -30,6 +51,10 @@ export default function StockChart(props) {
 
     useEffect(() => {
         checkMarket();
+        setInterval(checkMarket, 3600000);
+    }, [])
+
+    useEffect(() => {
         const unsubscribeListener = onSnapshot(graphDataCollection, function(snapshot) {
             const dataArray = snapshot.docs.filter(doc => (doc.id === props.symbol)).map(doc => ({
                 ...doc.data().graphData
@@ -75,8 +100,6 @@ export default function StockChart(props) {
             })
         }
 
-        fetchCurrStockData()
-
         if (marketStatus) {
             
             const intervalId = setInterval(fetchCurrStockData, 20000)
@@ -86,8 +109,8 @@ export default function StockChart(props) {
 
 
     return (
-        <div className="stockChart">
-            <Chart chartType="LineChart" data={chartData} />
+        <div className="chartHolder">
+            <Chart className="stockChart" chartType="LineChart" data={chartData} options={chartOptions}/>
         </div>
     )
 }
