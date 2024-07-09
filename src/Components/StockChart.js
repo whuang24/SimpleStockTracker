@@ -9,44 +9,55 @@ import { graphDataCollection, db } from "../firebase";
 export default function StockChart(props) {
     const [marketStatus, setmarketStatus] = useState(false)
     const [chartData, setChartData] = useState([
-        ['Time', 'Price']
+        ['Time', 'Percentage']
     ]);
 
-    const chartOptions = {
+    const [chartOptions, setChartOptions] = useState({
         legend: 'none',
         backgroundColor: '#1F2023',
         vAxis: {
             textStyle: {
-                color: "#FFFFFF"
+                color: "rgba(235, 235, 235, 0.37)"
+            },
+            
+            gridlines: {
+                color: 'transparent',
             },
         },
-        hAxis: {
-            textStyle: {
-                color: "#FFFFFF"
-            },
-            ticks: [
-                [9, 0, 0, 0],
-                [12, 0, 0, 0],
-                [15, 0, 0, 0],
-                [18, 0, 0, 0], //Current problem: need to convert the loaded data into timeOfDay objects rather than just leaving them as Date objects
-                [21, 0, 0, 0],
-                [24, 0, 0, 0]
-            ],
-            format: 'h:mm a',
+        tooltip: {
+            isHtml: true,
+            trigger: 'focus',
         }
-    };
-
-    const estOptions = {
-        timeZone: 'America/New_York',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: true,
-    }
+    })
 
     async function checkMarket() {
-        const marketStatus = await isMarketOpen()
-        setmarketStatus(marketStatus)
+        const marketStatus = await isMarketOpen();
+        setmarketStatus(marketStatus);
+
+        var today = new Date();
+        var todayString = today.toISOString().split('T')[0];
+        console.log(todayString);
+
+        setChartOptions(oldOptions => {
+            return {
+                ...oldOptions,
+                hAxis: {
+                    textStyle: {
+                        color: "rgba(235, 235, 235, 0.37)"
+                    },
+                    ticks: [
+                        new Date(`${todayString}T09:00:00`),
+                        new Date(`${todayString}T12:00:00`),
+                        new Date(`${todayString}T15:00:00`),
+                        new Date(`${todayString}T18:00:00`),
+                    ],
+                    format: 'h:mm a',
+                    gridlines : {
+                        color: 'transparent',
+                    },
+                }
+            }
+        })
     }
 
     useEffect(() => {
@@ -64,13 +75,12 @@ export default function StockChart(props) {
                 if (dataArray.hasOwnProperty(key)) {
                     var nestedObject = dataArray[key];
 
-                    var formatter = new Intl.DateTimeFormat('en-US', estOptions);
-                    var formattedDate = formatter.format(new Date(nestedObject.time));
+                    var formattedDate = new Date(nestedObject.time);
 
                     setChartData(oldData => {
                         return [
                             ...oldData,
-                            [formattedDate, nestedObject.price]
+                            [formattedDate, nestedObject.percentage]
                         ]
                     })
                 }
@@ -81,13 +91,13 @@ export default function StockChart(props) {
     }, [])
 
     useEffect(() => {
-        async function syncWithDatabase(currTime, currPrice) {
+        async function syncWithDatabase(currTime, currPercent) {
             const docRef = doc(db, "graphData", props.symbol)
             await setDoc(docRef, {
                 graphData: {
                     [new Date().toISOString()]: {
                         time: currTime,
-                        price: currPrice
+                        percentage: currPercent
                     }
                 }
             }, {merge: true})
@@ -96,9 +106,11 @@ export default function StockChart(props) {
         async function fetchCurrStockData() {
             const currTime = Date.now();
             finnhubClient.quote(props.symbol, (error, data, response) => {
-                syncWithDatabase(currTime, data.c);
+                syncWithDatabase(currTime, data.dp);
             })
         }
+
+        fetchCurrStockData();
 
         if (marketStatus) {
             
