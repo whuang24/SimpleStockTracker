@@ -5,6 +5,7 @@ import 'chart.js/auto'
 import { finnhubClient, isMarketOpen } from "../finnhubService";
 import { onSnapshot, doc, setDoc } from "firebase/firestore";
 import { graphDataCollection, db } from "../firebase";
+import { toZonedTime, format} from 'date-fns-tz'
 
 export default function StockChart(props) {
     const [marketStatus, setmarketStatus] = useState(false)
@@ -75,12 +76,13 @@ export default function StockChart(props) {
                 if (dataArray.hasOwnProperty(key)) {
                     var nestedObject = dataArray[key];
 
-                    var formattedDate = new Date(nestedObject.time);
+                    const est = 'America/New_York'
+                    const estTime = toZonedTime(nestedObject.time, est);
 
                     setChartData(oldData => {
                         return [
                             ...oldData,
-                            [formattedDate, nestedObject.percentage]
+                            [estTime, nestedObject.percentage]
                         ]
                     })
                 }
@@ -105,6 +107,7 @@ export default function StockChart(props) {
 
         async function fetchCurrStockData() {
             const currTime = Date.now();
+
             finnhubClient.quote(props.symbol, (error, data, response) => {
                 syncWithDatabase(currTime, data.dp);
             })
