@@ -6,7 +6,7 @@ import React, {useState, useEffect} from 'react'
 
 function App() {
   const [watchlist, setWatchlist] = useState(
-    localStorage.getItem("watchlistSymbols") === 'null' ?
+    localStorage.getItem("watchlistSymbols") === 'null' || !localStorage.getItem("watchlistSymbols") ?
     [] :
     JSON.parse(localStorage.getItem("watchlistSymbols"))
   )

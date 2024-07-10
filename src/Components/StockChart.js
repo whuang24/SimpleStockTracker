@@ -8,11 +8,13 @@ import { graphDataCollection, db } from "../firebase";
 import { toZonedTime, format} from 'date-fns-tz'
 
 export default function StockChart(props) {
-    const [marketStatus, setmarketStatus] = useState(false)
-    const [chartData, setChartData] = useState([
-        ['Time', 'Percentage']
-    ]);
-
+    /*Initializing the states:
+        1. A state to store the status of the american stock market
+        2. A state to store the data to be loaded onto the chart
+        3. A state to store the customization options of the chart
+    */
+    const [marketStatus, setmarketStatus] = useState(true)
+    const [chartData, setChartData] = useState();
     const [chartOptions, setChartOptions] = useState({
         legend: 'none',
         backgroundColor: '#1F2023',
@@ -22,7 +24,7 @@ export default function StockChart(props) {
             },
             
             gridlines: {
-                color: 'transparent',
+                color: 'none',
             },
         },
         tooltip: {
@@ -31,13 +33,29 @@ export default function StockChart(props) {
         }
     })
 
+
+    /*
+        Function: checkMarket()
+        Purpose: to check for the status of the stock market and sets the state that tracks the market status
+    */
     async function checkMarket() {
         const marketStatus = await isMarketOpen();
         setmarketStatus(marketStatus);
+    }
 
+    useEffect(() => {
+        checkMarket();
+        setInterval(checkMarket, 60000);
+    }, [])
+
+
+    /*
+        Function: marketOpenGraphSetup()
+        Purpose: to set up the graph horizontal axis styling options
+    */
+    async function marketOpenGraphSetup() {
         var today = new Date();
         var todayString = today.toISOString().split('T')[0];
-        console.log(todayString);
 
         setChartOptions(oldOptions => {
             return {
@@ -54,17 +72,63 @@ export default function StockChart(props) {
                     ],
                     format: 'h:mm a',
                     gridlines : {
-                        color: 'transparent',
+                        color: 'none',
                     },
                 }
             }
         })
     }
 
+    function isNineThirty() {
+        var now = new Date();
+        var est = new Date(now.toLocaleString("en-US", {timeZone: "America/New_York"}));
+        if (est.getHours() === 9 && est.getMinutes() === 30) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     useEffect(() => {
-        checkMarket();
-        setInterval(checkMarket, 3600000);
-    }, [])
+        async function deletePrevDayData() {
+            const docRef = doc(db, "graphData", props.symbol)
+            await setDoc(docRef, {});
+        }
+
+        async function syncWithDatabase(currTime, currPercent) {
+            const docRef = doc(db, "graphData", props.symbol)
+            await setDoc(docRef, {
+                graphData: {
+                    [new Date().toISOString()]: {
+                        time: currTime,
+                        percentage: currPercent
+                    }
+                }
+            }, {merge: true})
+        }
+
+        async function fetchCurrStockData() {
+            const currTime = Date.now();
+
+            finnhubClient.quote(props.symbol, (error, data, response) => {
+                syncWithDatabase(currTime, data.dp);
+            })
+        }
+
+
+        setChartData([['Time', 'Percentage']]);
+
+        if (isNineThirty() && marketStatus) {
+            deletePrevDayData();
+        }
+
+        if (marketStatus) {
+            marketOpenGraphSetup();
+            
+            const intervalId = setInterval(fetchCurrStockData, 15000)
+            return () => clearInterval(intervalId)
+        }
+    }, [props.symbol, marketStatus]);
 
     useEffect(() => {
         const unsubscribeListener = onSnapshot(graphDataCollection, function(snapshot) {
@@ -90,42 +154,25 @@ export default function StockChart(props) {
         })
 
         return unsubscribeListener;
-    }, [])
-
-    useEffect(() => {
-        async function syncWithDatabase(currTime, currPercent) {
-            const docRef = doc(db, "graphData", props.symbol)
-            await setDoc(docRef, {
-                graphData: {
-                    [new Date().toISOString()]: {
-                        time: currTime,
-                        percentage: currPercent
-                    }
-                }
-            }, {merge: true})
-        }
-
-        async function fetchCurrStockData() {
-            const currTime = Date.now();
-
-            finnhubClient.quote(props.symbol, (error, data, response) => {
-                syncWithDatabase(currTime, data.dp);
-            })
-        }
-
-        fetchCurrStockData();
-
-        if (marketStatus) {
-            
-            const intervalId = setInterval(fetchCurrStockData, 20000)
-            return () => clearInterval(intervalId)
-        }
-    }, [props.symbol, marketStatus]);
+    }, [props.symbol])
 
 
     return (
         <div className="chartHolder">
-            <Chart className="stockChart" chartType="LineChart" data={chartData} options={chartOptions}/>
+            <Chart 
+                className="stockChart" 
+                chartType="LineChart" 
+                data={chartData} 
+                options={chartOptions}
+                events={[
+                    {
+                      eventName: 'error',
+                      callback: ({ chartWrapper }) => {
+                        console.log("Error", chartWrapper);
+                      }
+                    }
+                ]}
+            />
         </div>
     )
 }
