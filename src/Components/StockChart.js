@@ -52,10 +52,8 @@ export default function StockChart(props) {
 
     function duringMarketHours() {
         var now = new Date();
-
         var est = new Date(now.toLocaleString("en-US", {timeZone: "America/New_York"}));
 
-        // Check if the time is between 9:30 AM and 4:00 PM
         if ((est.getHours() > 9 || (est.getHours() === 9 && est.getMinutes() >= 30)) && est.getHours() < 16) {
             return true;
         } else {
