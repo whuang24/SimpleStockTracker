@@ -36,10 +36,11 @@
   padding: 15px;
   border: 1px solid #ccc;
   border-top: none;
-  background-color: white;
+  background-color: #464646;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   border-radius: 5px;
+  color: rgba(235, 235, 235, 0.9);
 }
 
 .searchResultItems {
@@ -59,15 +60,24 @@
   font-size: 0.75rem;
   word-wrap: break-word;
   margin-left: auto;
-  flex: 1;
   align-self: center;
 }
 
 .searchResultItems > button {
   cursor: pointer;
   margin-left: auto;
-  flex: 1;
+  background-color: rgba(11, 148, 82, 1);
+  color: rgba(235, 235, 235, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
 }
+
+.addIcon {
+  font-size: 1.25rem;
+}
+
 
 .search-bar-dropdown-item:hover {
   background-color: #f0f0f0;

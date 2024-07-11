@@ -49,7 +49,9 @@ export default function StockSearchbar(props) {
                 <p>Already added to the watchlist</p> :
                 <button onClick={(event) => 
                     addToSelection(event, suggestion.symbol)
-                }>Add to Watchlist</button>}
+                }>
+                    <FontAwesomeIcon icon="fa-solid fa-plus" className="addIcon"/>
+                </button>}
             </div>
         )
     })
