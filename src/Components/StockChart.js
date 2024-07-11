@@ -3,7 +3,7 @@ import "../Component CSS/StockChart.css"
 import { Chart } from 'react-google-charts'
 import 'chart.js/auto'
 import { finnhubClient, isMarketOpen } from "../finnhubService";
-import { onSnapshot, doc, setDoc } from "firebase/firestore";
+import { onSnapshot, doc, setDoc, orderBy, query } from "firebase/firestore";
 import { graphDataCollection, db } from "../firebase";
 import { toZonedTime, format} from 'date-fns-tz'
 
@@ -16,6 +16,7 @@ export default function StockChart(props) {
     const [marketStatus, setmarketStatus] = useState(true)
     const [chartData, setChartData] = useState();
     const [chartOptions, setChartOptions] = useState({
+        curveType: "function",
         legend: 'none',
         backgroundColor: '#1F2023',
         vAxis: {
@@ -49,6 +50,20 @@ export default function StockChart(props) {
     }, [])
 
 
+    function duringMarketHours() {
+        var now = new Date();
+
+        var est = new Date(now.toLocaleString("en-US", {timeZone: "America/New_York"}));
+
+        // Check if the time is between 9:30 AM and 4:00 PM
+        if ((est.getHours() > 9 || (est.getHours() === 9 && est.getMinutes() >= 30)) && est.getHours() < 16) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     /*
         Function: marketOpenGraphSetup()
         Purpose: to set up the graph horizontal axis styling options
@@ -79,22 +94,7 @@ export default function StockChart(props) {
         })
     }
 
-    function isNineThirty() {
-        var now = new Date();
-        var est = new Date(now.toLocaleString("en-US", {timeZone: "America/New_York"}));
-        if (est.getHours() === 9 && est.getMinutes() === 30) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     useEffect(() => {
-        async function deletePrevDayData() {
-            const docRef = doc(db, "graphData", props.symbol)
-            await setDoc(docRef, {});
-        }
-
         async function syncWithDatabase(currTime, currPercent) {
             const docRef = doc(db, "graphData", props.symbol)
             await setDoc(docRef, {
@@ -115,17 +115,12 @@ export default function StockChart(props) {
             })
         }
 
-
         setChartData([['Time', 'Percentage']]);
 
-        if (isNineThirty() && marketStatus) {
-            deletePrevDayData();
-        }
-
-        if (marketStatus) {
+        if (marketStatus && duringMarketHours()) {
             marketOpenGraphSetup();
             
-            const intervalId = setInterval(fetchCurrStockData, 15000)
+            const intervalId = setInterval(fetchCurrStockData, 60000)
             return () => clearInterval(intervalId)
         }
     }, [props.symbol, marketStatus]);
@@ -136,17 +131,27 @@ export default function StockChart(props) {
                 ...doc.data().graphData
             }))[0];
 
-            for (const key in dataArray) {
-                if (dataArray.hasOwnProperty(key)) {
-                    var nestedObject = dataArray[key];
+            const keys = Object.keys(dataArray);
+            keys.sort();
 
-                    const est = 'America/New_York'
-                    const estTime = toZonedTime(nestedObject.time, est);
+            const latestDate = new Date(keys[keys.length - 1].split('T')[0]);
+            const latestMarketTime = latestDate.setHours(9, 30, 0, 0);
 
+            for (var i = 0; i < keys.length; i++) {
+                var nestedObject = dataArray[keys[i]];
+
+                const est = 'America/New_York'
+                const estTime = toZonedTime(nestedObject.time, est);
+
+                const estTimestamp = estTime.getTime();
+
+                const percentage = nestedObject.percentage;
+
+                if (estTimestamp > latestMarketTime) {
                     setChartData(oldData => {
                         return [
                             ...oldData,
-                            [estTime, nestedObject.percentage]
+                            [estTime, percentage]
                         ]
                     })
                 }
@@ -154,7 +159,7 @@ export default function StockChart(props) {
         })
 
         return unsubscribeListener;
-    }, [props.symbol])
+    }, [props.symbol, marketStatus])
 
 
     return (
@@ -164,14 +169,6 @@ export default function StockChart(props) {
                 chartType="LineChart" 
                 data={chartData} 
                 options={chartOptions}
-                events={[
-                    {
-                      eventName: 'error',
-                      callback: ({ chartWrapper }) => {
-                        console.log("Error", chartWrapper);
-                      }
-                    }
-                ]}
             />
         </div>
     )
