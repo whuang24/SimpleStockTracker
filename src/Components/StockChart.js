@@ -132,7 +132,9 @@ export default function StockChart(props) {
             const keys = Object.keys(dataArray);
             keys.sort();
 
-            const latestDate = new Date(keys[keys.length - 1].split('T')[0]);
+            const latestDate = keys.length === 0 ? 
+                                new Date() :
+                                new Date(keys[keys.length - 1].split('T')[0]);
             const latestMarketTime = latestDate.setHours(9, 30, 0, 0);
 
             for (var i = 0; i < keys.length; i++) {
