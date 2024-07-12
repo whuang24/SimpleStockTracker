@@ -32,7 +32,7 @@
 .searchResults {
   position: absolute;
   top: 100%;
-  width: 90%;
+  width: 90% !important;
   padding: 1rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12),
               0 4px 8px rgba(0, 0, 0, 0.24);
@@ -50,15 +50,38 @@
   cursor: default;
 }
 
+.searchResultItems:not(:last-child) {
+  border-bottom: 1px solid rgba(106, 107, 109, 1);
+}
+
 .searchResultTitle {
   flex: 3;
   text-wrap: wrap;
   justify-content: start;
+  display:flex;
+  flex-direction: column;
+  height: 3rem;
+}
+
+.resultSymbol {
+  color: rgba(235, 235, 235, 0.9);
+  font-weight: 600;
+  margin: 0;
+  text-align: start;
+}
+
+.resultName {
+  color: rgba(235, 235, 235, 0.9);
+  font-weight: 200;
+  margin: 0;
+  text-align: start;
 }
 
 .searchResultItems > p {
   font-size: 0.75rem;
   word-wrap: break-word;
+  width: 8rem;
+  text-align: right;
   margin-left: auto;
   align-self: center;
 }
@@ -72,6 +95,7 @@
   border-radius: 50%;
   width: 2.5rem;
   height: 2.5rem;
+  align-self: center;
 }
 
 .addIcon {

@@ -44,7 +44,10 @@ export default function StockSearchbar(props) {
     const suggestionElements = suggestions.map((suggestion) => {
         return (
             <div key={suggestion.symbol} className="searchResultItems">
-                <div className="searchResultTitle">{suggestion.symbol} - {suggestion.description}</div>
+                <div className="searchResultTitle">
+                    <p className="resultSymbol">{suggestion.symbol}</p>
+                    <p className="resultName">{suggestion.description}</p>
+                </div>
                 {props.watchlist.includes(suggestion.symbol) ?
                 <p>Already added to the watchlist</p> :
                 <button onClick={(event) => 

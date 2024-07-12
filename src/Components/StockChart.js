@@ -2,10 +2,10 @@ import React, {useEffect, useState} from "react"
 import "../Component CSS/StockChart.css"
 import { Chart } from 'react-google-charts'
 import 'chart.js/auto'
-import { finnhubClient, isMarketOpen } from "../finnhubService";
-import { onSnapshot, doc, setDoc, orderBy, query } from "firebase/firestore";
-import { graphDataCollection, db } from "../firebase";
-import { toZonedTime, format} from 'date-fns-tz'
+import { isMarketOpen } from "../finnhubService";
+import { onSnapshot} from "firebase/firestore";
+import { graphDataCollection} from "../firebase";
+import { toZonedTime} from 'date-fns-tz'
 
 export default function StockChart(props) {
     /*Initializing the states:
@@ -49,19 +49,6 @@ export default function StockChart(props) {
         setInterval(checkMarket, 60000);
     }, [])
 
-
-    function duringMarketHours() {
-        var now = new Date();
-        var est = new Date(now.toLocaleString("en-US", {timeZone: "America/New_York"}));
-
-        if ((est.getHours() > 9 || (est.getHours() === 9 && est.getMinutes() >= 30)) && est.getHours() < 16) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
     /*
         Function: marketOpenGraphSetup()
         Purpose: to set up the graph horizontal axis styling options
@@ -93,49 +80,33 @@ export default function StockChart(props) {
     }
 
     useEffect(() => {
-        async function syncWithDatabase(currTime, currPercent) {
-            const docRef = doc(db, "graphData", props.symbol)
-            await setDoc(docRef, {
-                graphData: {
-                    [new Date().toISOString()]: {
-                        time: currTime,
-                        percentage: currPercent
-                    }
-                }
-            }, {merge: true})
-        }
-
-        async function fetchCurrStockData() {
-            const currTime = Date.now();
-
-            finnhubClient.quote(props.symbol, (error, data, response) => {
-                syncWithDatabase(currTime, data.dp);
-            })
-        }
-
-        setChartData([['Time', 'Percentage']]);
-
-        if (marketStatus && duringMarketHours()) {
+        if (marketStatus) {
             marketOpenGraphSetup();
-            
-            const intervalId = setInterval(fetchCurrStockData, 60000)
-            return () => clearInterval(intervalId)
         }
-    }, [props.symbol, marketStatus]);
+    }, [props.symbol, marketStatus])
 
+
+    //Renders the stored data to the graph to be displayed
     useEffect(() => {
         const unsubscribeListener = onSnapshot(graphDataCollection, function(snapshot) {
+            setChartData([['Time', 'Percentage']]);
             const dataArray = snapshot.docs.filter(doc => (doc.id === props.symbol)).map(doc => ({
                 ...doc.data().graphData
             }))[0];
 
-            const keys = Object.keys(dataArray);
-            keys.sort();
+            var keys = []
+
+            if (dataArray) {
+                keys = Object.keys(dataArray);
+                keys.sort();
+            }
 
             const latestDate = keys.length === 0 ? 
                                 new Date() :
                                 new Date(keys[keys.length - 1].split('T')[0]);
             const latestMarketTime = latestDate.setHours(9, 30, 0, 0);
+
+            var newData = [];
 
             for (var i = 0; i < keys.length; i++) {
                 var nestedObject = dataArray[keys[i]];
@@ -148,14 +119,16 @@ export default function StockChart(props) {
                 const percentage = nestedObject.percentage;
 
                 if (estTimestamp > latestMarketTime) {
-                    setChartData(oldData => {
-                        return [
-                            ...oldData,
-                            [estTime, percentage]
-                        ]
-                    })
+                    newData.push([estTime, percentage])
                 }
             }
+
+            setChartData(oldData => {
+                return [
+                    ...oldData,
+                    ...newData
+                ]
+            });
         })
 
         return unsubscribeListener;

@@ -5,6 +5,8 @@ import '../Component CSS/Watchlist.css'
 import StockCard from './StockCard'
 import StockSearchbar from './stockSearchbar'
 import { finnhubClient, isMarketOpen} from "../finnhubService"
+import { db } from "../firebase";
+import { doc, setDoc } from "firebase/firestore"
 
 library.add(fas)
 
@@ -19,13 +21,28 @@ export default function Watchlist(props) {
 
     useEffect(() => {
         checkMarket();
+        setInterval(checkMarket, 60000);
     }, [])
     
     
     useEffect(() => {
+        async function syncWithDatabase(symbol, currTime, currPercent) {
+            const docRef = doc(db, "graphData", symbol)
+            await setDoc(docRef, {
+                graphData: {
+                    [new Date().toISOString()]: {
+                        time: currTime,
+                        percentage: currPercent
+                    }
+                }
+            }, {merge: true})
+        }
+
         async function fetchData() {
             for (let i = 0; i < props.watchlist.length; i++) {
                 const symbol = props.watchlist[i];
+
+                const currTime = Date.now();
             
                 finnhubClient.quote(symbol, (error, data, response) => {
                     setWatchlistData(oldData => {
@@ -33,6 +50,8 @@ export default function Watchlist(props) {
                         newData.set(symbol, data)
                         return newData
                     })
+
+                    syncWithDatabase(symbol, currTime, data.dp);
                 })
             }
         }
