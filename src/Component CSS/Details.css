@@ -1,11 +1,28 @@
 .details {
     flex: 3;
-    overflow-y: auto;
+    overflow-y: hidden;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
+.details:hover {
+    overflow-y: auto;
+  }
+  
+  .details::-webkit-scrollbar {
+    width: 0.3rem;
+  }
+  
+  .details::-webkit-scrollbar-thumb {
+    background-color: rgba(177, 177, 177, 0.2);
+    border-radius: 1rem;
+  }
+  
+  .details::-webkit-scrollbar-track {
+    background-color: rgba(177, 177, 177, 0.1);
+  }
 
 .details > h1 {
     color: rgba(235, 235, 235, 0.9);
