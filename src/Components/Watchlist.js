@@ -51,7 +51,9 @@ export default function Watchlist(props) {
                         return newData
                     })
 
-                    syncWithDatabase(symbol, currTime, data.dp);
+                    if (marketStatus) {
+                        syncWithDatabase(symbol, currTime, data.dp);
+                    }
                 })
             }
         }
