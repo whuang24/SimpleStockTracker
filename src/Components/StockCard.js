@@ -24,8 +24,9 @@ export default function StockCard(props) {
             <h2 className="cardSymbol">{props.symbol}</h2>
             <div className="pricingSection">
                 <div className="cardPrice">
-                    ${props.data && props.data.c}
-                    <sub>USD</sub>
+                    <p>${props.data && props.data.c}
+                        <sub>USD</sub>
+                    </p>
                 </div>
                 <div className="watchlistTrendBox" style={style}>
                     {props.data && (props.data.d >= 0?

@@ -22,7 +22,7 @@
     margin: 0rem 2rem;
 }
 
-.cardPrice {
+.cardPrice > p {
     flex: 1;
     color: rgba(235, 235, 235, 0.9);
     text-align: right;
@@ -31,7 +31,7 @@
     font-size: 1.1rem;
 }
 
-.cardPrice > sub {
+.cardPrice > p > sub {
     font-size: 1rem;
     vertical-align: middle;
     font-weight: 300;
@@ -65,5 +65,26 @@
     .stockCard {
         display: flex;
         flex-direction: column;
+        width: 20rem;
+    }
+
+    .cardSymbol {
+        margin: 0 1rem;
+    }
+
+    .pricingSection {
+        display: flex;
+        flex-direction: row;
+        margin: 0 1rem;
+    }
+
+    .cardPrice {
+        vertical-align: middle;
+        margin-right: 1rem;
+        margin-bottom: 0;
+    }
+
+    .watchlistTrendBox {
+        align-self: center;
     }
 }
