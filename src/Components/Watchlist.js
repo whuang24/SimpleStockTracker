@@ -72,10 +72,13 @@ export default function Watchlist(props) {
 
     return (
         <div className="watchlistContainer">
-            <div className="watchlistHeader">
-                <h1>Watchlist</h1>
+            <div className="watchlistUpper">
+                <div className="watchlistHeader">
+                    <h1>Watchlist</h1>
+                    <StockSearchbar className="searchBar" watchlist={props.watchlist} handleSelect={props.selectWatchlist} />
+                </div>
+                
             </div>
-            <StockSearchbar watchlist={props.watchlist} handleSelect={props.selectWatchlist} />
             <div className="watchlistBody">
                 {stockCardElements}
             </div>

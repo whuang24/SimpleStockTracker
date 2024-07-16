@@ -88,16 +88,18 @@ export default function Header(props) {
     return (
         <nav className="header">
             <div className="upperHeader">
-                {<img 
-                    className="companyLogo" 
-                    src={stockBasics.logo} 
-                    alt={`Logo of ${stockBasics.name}`}
-                />}
-                <div className="detailTitle">
-                    <h1 className="detailSymbol">{stockBasics.symbol}</h1>
-                    <p className="exchange">NASDAQ</p>
+                <div className="upperDetails">
+                    {<img 
+                        className="companyLogo" 
+                        src={stockBasics.logo} 
+                        alt={`Logo of ${stockBasics.name}`}
+                    />}
+                    <div className="detailTitle">
+                        <h1 className="detailSymbol">{stockBasics.symbol}</h1>
+                        <p className="exchange">NASDAQ</p>
+                    </div>
+                    <h2 className="detailName">{stockBasics.name}</h2>
                 </div>
-                <h2 className="detailName">{stockBasics.name}</h2>
                 
                 <button 
                     className="unsubscribeBtn" 

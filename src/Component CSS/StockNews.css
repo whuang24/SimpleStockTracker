@@ -4,4 +4,16 @@
     gap: 2rem;
     margin-top: 2rem;
     flex: 2;
+    width: 100%;
 }
+
+/* ==============================
+   Size Responsive Styling
+   ============================== */
+
+   @media (max-width: 1550px) {
+    .newsContainer {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+    }
+  }

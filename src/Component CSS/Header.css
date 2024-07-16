@@ -18,6 +18,13 @@
     height: 5rem;
 }
 
+.upperDetails {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+}
+
 .detailTitle {
     display: flex;
     flex-direction: column;
@@ -116,4 +123,33 @@
    Size Responsive Styling
    ============================== */
 
+   @media (max-width: 1025px) {
+    .upperHeader {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 2rem;
+    }
 
+    .upperDetails {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        align-items: center;
+    }
+
+    .unsubscribeBtn {
+        margin-left: 0;
+    }
+
+    @media (max-width: 850px) {
+        .upperDetails {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detailName {
+            align-self: center;
+        }
+    }
+  }

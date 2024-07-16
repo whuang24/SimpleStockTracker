@@ -39,15 +39,13 @@ function App() {
 
   return (
     <div className="App">
-      <Split className="split">
-        <Watchlist
-          currStock={currStock}
-          detailSelect={detailSelect}
-          watchlist={watchlist}
-          selectWatchlist={selectWatchlist}
-        />
-        <Details currStock={currStock} removing={removeFromWatchlist}/>
-      </Split>
+      <Watchlist
+        currStock={currStock}
+        detailSelect={detailSelect}
+        watchlist={watchlist}
+        selectWatchlist={selectWatchlist}
+      />
+      <Details currStock={currStock} removing={removeFromWatchlist}/>
     </div>
   );
 }

@@ -72,3 +72,18 @@
     text-align: left;
     text-overflow: ellipsis;
 }
+
+
+@media (max-width: 1550px) {
+    .newsCard {
+        width: 100%;
+        justify-self: center;
+    }
+}
+
+@media (min-width: 360px) {
+    
+}
+
+
+
