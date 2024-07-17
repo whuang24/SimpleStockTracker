@@ -56,7 +56,7 @@
   .watchlistBody {
     display: flex;
     flex-direction: row;
-    overflow-x: hidden;
+    overflow-x: auto;
     scrollbar-gutter: stable;
   }
 
@@ -71,10 +71,6 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-  }
-
-  .watchlistBody:hover {
-    overflow-x: auto;
   }
   
   .watchlistBody::-webkit-scrollbar {
