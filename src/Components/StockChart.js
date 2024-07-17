@@ -49,7 +49,7 @@ export default function StockChart(props) {
             checkMarket();
             setInterval(checkMarket, 60000);
         } catch (error) { 
-            if (error.message.includes('timeout')) {
+            if (error.message.includes('Timeout')) {
                 //An issue that requires a deeper look in the future
                 console.log('Timeout error occurred')
             } else {
