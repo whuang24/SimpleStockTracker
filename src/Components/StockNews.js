@@ -38,8 +38,8 @@ export default function StockNews(props) {
         }
 
         checkMarket()
-        console.log(marketStatus)
 
+        
         updateNews()
 
         if (marketStatus) {
