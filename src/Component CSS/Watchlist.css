@@ -4,9 +4,9 @@
     flex: 1;
     background-color: #27292D;
     border-radius: 1rem;
-    margin: 3rem 2rem;
+    margin: 2rem;
     overflow: hidden;
-    padding-bottom: 2rem;
+    max-height: calc(100vh - 6rem);
 }
 
 .watchlistHeader {
@@ -18,7 +18,7 @@
 .watchlistHeader > h1 {
   align-self: start;
   font-weight: 500;
-  margin-left: 1em;
+  margin-left: 2rem;
   color: rgba(235, 235, 235, 0.8);
 }
 
@@ -31,10 +31,12 @@
     grid-template-columns: 1fr;
     gap: 1.5rem 0.5rem;
     box-sizing: content-box;
+    scrollbar-gutter: stable;
 }
 
 .watchlistBody:hover {
   overflow-y: auto;
+  scrollbar-gutter: stable;
 }
 
 .watchlistBody::-webkit-scrollbar {
@@ -54,17 +56,37 @@
   .watchlistBody {
     display: flex;
     flex-direction: row;
+    overflow-x: hidden;
+    scrollbar-gutter: stable;
   }
 
   .watchlistContainer {
     display: flex;
     flex-direction: column;
     padding-bottom: 0;
+    margin: 2rem;
   }
 
   .watchlistHeader {
     display: flex;
     flex-direction: row;
     align-items: center;
+  }
+
+  .watchlistBody:hover {
+    overflow-x: auto;
+  }
+  
+  .watchlistBody::-webkit-scrollbar {
+    height: 0.75rem;
+  }
+  
+  .watchlistBody::-webkit-scrollbar-thumb {
+    background-color: rgba(177, 177, 177, 0.2);
+    border-radius: 1rem;
+  }
+  
+  .watchlistBody::-webkit-scrollbar-track {
+    background-color: rgba(177, 177, 177, 0.1);
   }
 }
