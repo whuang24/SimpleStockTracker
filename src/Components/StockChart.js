@@ -59,12 +59,24 @@ export default function StockChart(props) {
     }, [])
 
     /*
-        Function: marketOpenGraphSetup()
+        Function: graphSetup()
         Purpose: to set up the graph horizontal axis styling options
     */
-    async function marketOpenGraphSetup() {
+    async function graphSetup() {
         var today = new Date();
-        var todayString = today.toISOString().split('T')[0];
+        var todayEst = new Date(Date.parse(today.toLocaleString('en-US', {timeZone: "America/New_York"})));
+
+        var estNineThirty = new Date(Date.parse(todayEst.toLocaleString('en-US', {timeZone: "America/New_York"})));
+        estNineThirty.setHours(9, 30, 0);
+
+        if (todayEst.getTime() < estNineThirty.getTime()) {
+            todayEst.setDate(todayEst.getDate() - 1);
+        }
+
+        var estString = todayEst.toLocaleDateString('en-US', {timeZone: "America/New_York"})
+
+        var parts = estString.split('/');
+        var todayString = `${parts[2]}-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`;
 
         setChartOptions(oldOptions => {
             return {
@@ -89,9 +101,7 @@ export default function StockChart(props) {
     }
 
     useEffect(() => {
-        if (marketStatus) {
-            marketOpenGraphSetup();
-        }
+        graphSetup();
     }, [props.symbol, marketStatus])
 
 
