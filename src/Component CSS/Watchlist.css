@@ -50,6 +50,8 @@
 
 .watchlistBody::-webkit-scrollbar-track {
   background-color: rgba(177, 177, 177, 0.1);
+  border-radius: 1rem;
+  margin: 1rem 0rem;
 }
 
 @media (max-width: 1575px) {
@@ -84,5 +86,7 @@
   
   .watchlistBody::-webkit-scrollbar-track {
     background-color: rgba(177, 177, 177, 0.1);
+    border-radius: 1rem;
+    margin: 0rem 1rem;
   }
 }
