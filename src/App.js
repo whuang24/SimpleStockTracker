@@ -1,5 +1,4 @@
 import './App.css';
-import Split from "react-split"
 import Watchlist from "./Components/Watchlist"
 import Details from "./Components/Details"
 import React, {useState, useEffect} from 'react'
