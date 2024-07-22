@@ -58,6 +58,20 @@ export default function StockChart(props) {
         }
     }, [])
 
+    async function clearFirebase(date, symbol) {
+        if (date === 0) {
+            var docRef = graphDataCollection.doc(symbol);
+
+            docRef.set({})
+            .then(() => {
+                console.log(`${symbol} previous week data successfully deleted`)
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+        }
+    }
+
     /*
         Function: graphSetup()
         Purpose: to set up the graph horizontal axis styling options
