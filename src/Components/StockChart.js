@@ -34,6 +34,23 @@ export default function StockChart(props) {
         }
     })
 
+    async function clearFirebase() {
+        var today = new Date();
+        var todayEst = new Date(Date.parse(today.toLocaleString('en-US', {timeZone: "America/New_York"})));
+
+        if (todayEst === 0) {
+            var docRef = graphDataCollection.doc(props.symbol);
+
+            docRef.set({})
+            .then(() => {
+                console.log(`${props.symbol} previous week data successfully deleted`)
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+        }
+    }
+
 
     /*
         Function: checkMarket()
@@ -42,6 +59,7 @@ export default function StockChart(props) {
     async function checkMarket() {
         const marketStatus = await isMarketOpen();
         setmarketStatus(marketStatus);
+        clearFirebase();
     }
 
     useEffect(() => {
@@ -57,20 +75,6 @@ export default function StockChart(props) {
             }
         }
     }, [])
-
-    async function clearFirebase(date, symbol) {
-        if (date === 0) {
-            var docRef = graphDataCollection.doc(symbol);
-
-            docRef.set({})
-            .then(() => {
-                console.log(`${symbol} previous week data successfully deleted`)
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-        }
-    }
 
     /*
         Function: graphSetup()
