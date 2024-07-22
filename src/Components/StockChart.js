@@ -91,9 +91,7 @@ export default function StockChart(props) {
             todayEst.setDate(todayEst.getDate() - 1);
         }
 
-        var estString = todayEst.toLocaleString().split(',')[0]
-
-        var parts = estString.split('/');
+        var parts = todayEst.toLocaleString().split(',')[0].split('/');
         var todayString = `${parts[2]}-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`;
 
         setChartOptions(oldOptions => {
