@@ -84,8 +84,11 @@ export default function StockChart(props) {
         var today = new Date();
         var todayEst = new Date(Date.parse(today.toLocaleString('en-US', {timeZone: "America/New_York"})));
 
-        var estNineThirty = new Date(Date.parse(todayEst.toLocaleString('en-US', {timeZone: "America/New_York"})));
+        var estNineThirty = new Date(Date.parse(today.toLocaleString('en-US', {timeZone: "America/New_York"})));
         estNineThirty.setHours(9, 30, 0);
+
+        console.log(todayEst)
+        console.log(estNineThirty);
 
         if (todayEst.getTime() < estNineThirty.getTime()) {
             todayEst.setDate(todayEst.getDate() - 1);
