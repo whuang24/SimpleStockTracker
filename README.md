@@ -29,9 +29,9 @@ This project is an ongoing one that is open for feature suggestions and expansio
 
 ### Built With
 
-* [![React][React.js]][React-url]
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+[![React][React.js]][React-url]
+[![Finnhub][Finnhub-icon]][Finnhub-url]
+[![Firebase][Firebase-icon]][Firebase-url]
 
 
 ## Project Limitations
@@ -42,8 +42,6 @@ The following is a list of the limitations that the app currently contain due to
 * The graph can only display stock data that is collected when the app is active and the specified stocks are selected in the watchlist. 
 * The app is built for minimum screen width of 600px because any smaller screens would have a much more difficult time seeing the stock graph.
 * The stocks that are available are only the NASDAQ and NYSE stocks.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 ## Getting Started
@@ -76,11 +74,11 @@ The app is accessible through the app icon above or the following URL.
 
 See the [open issues](https://github.com/whuang24/ReactStockTracker/issues) for a full list of proposed features (and known issues).
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [product-screenshot]: public/Screenshot1.png
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
+[Finnhub-icon]: https://static.finnhub.io/img/finnhub_2020-05-09_20_51/logo/logo-gradient2.png
+[Finnhub-url]: https://finnhub.io/
+[Firebase-icon]: https://firebase.google.com/static/images/brand-guidelines/logo-logomark.png
+[Firebase-url]: https://firebase.google.com/
