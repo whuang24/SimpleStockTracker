@@ -78,7 +78,7 @@ See the [open issues](https://github.com/whuang24/ReactStockTracker/issues) for 
 [product-screenshot]: public/Screenshot1.png
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
-[Finnhub-icon]: https://static.finnhub.io/img/finnhub_2020-05-09_20_51/logo/logo-gradient2.png
+[Finnhub-icon]: https://img.shields.io/badge/:badgeContent?logo=finnhub&logoColor=white
 [Finnhub-url]: https://finnhub.io/
-[Firebase-icon]: https://firebase.google.com/static/images/brand-guidelines/logo-logomark.png
+[Firebase-icon]: https://img.shields.io/badge/firebase-rgb(255%2C%20196%2C%200)?style=for-the-badge&logo=firebase&logoColor=%23DD2C00
 [Firebase-url]: https://firebase.google.com/
