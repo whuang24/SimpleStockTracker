@@ -21,7 +21,7 @@
 
 ## About The Project
 
-[![Simple Stock Tracker Screenshot][product-screenshot]]
+[![Simple Stock Tracker Screenshot][product-screenshot]](https://simplestocktracker.netlify.app/)
 
 This stock tracker is a very simplified one that allows users to keep track of stock prices, daily price trends, some basic stock data, and most recent news articles.
 
@@ -29,9 +29,9 @@ This project is an ongoing one that is open for feature suggestions and expansio
 
 ### Built With
 
-[![React][React.js]][React-url]
-[![Finnhub][Finnhub-icon]][Finnhub-url]
-[![Firebase][Firebase-icon]][Firebase-url]
+- [![React][React.js]][React-url]
+- [![Finnhub][Finnhub-icon]][Finnhub-url]
+- [![Firebase][Firebase-icon]][Firebase-url]
 
 
 ## Project Limitations
@@ -78,7 +78,7 @@ See the [open issues](https://github.com/whuang24/ReactStockTracker/issues) for 
 [product-screenshot]: public/Screenshot1.png
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
-[Finnhub-icon]: https://img.shields.io/badge/:badgeContent?logo=finnhub&logoColor=white
+[Finnhub-icon]: https://img.shields.io/badge/Finnhub-1DB954?style=for-the-badge
 [Finnhub-url]: https://finnhub.io/
 [Firebase-icon]: https://img.shields.io/badge/firebase-rgb(255%2C%20196%2C%200)?style=for-the-badge&logo=firebase&logoColor=%23DD2C00
 [Firebase-url]: https://firebase.google.com/
