@@ -3,7 +3,7 @@
 
 <br />
 <div align="center">
-  <a href="https://simplestocktracker.netlify.app/">
+  <a href="https://simplestocktracker.netlify.app/" target="_blank">
     <img src="public/icon.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -11,9 +11,6 @@
 
   <p align="center">
     A simplified stock data tracker
-    <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
-    <br />
     <br />
     <a href="https://github.com/whuang24/ReactStockTracker/issues/new?assignees=whuang24&labels=bug&projects=&template=bug_report.md&title=">Report Bug</a>
     ·
@@ -24,7 +21,7 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Simple Stock Tracker Screenshot][product-screenshot]]
 
 This stock tracker is a very simplified one that allows users to keep track of stock prices, daily price trends, some basic stock data, and most recent news articles.
 
@@ -53,12 +50,16 @@ The following is a list of the limitations that the app currently contain due to
 
 The app is accessible through the app icon above or the following URL.
 
-<div align="center"><a href="https://simplestocktracker.netlify.app/">Simple Stock Tracker</a></div>
+<div align="center">
+    <a href="https://simplestocktracker.netlify.app/" target="_blank">Simple Stock Tracker</a>
+</div>
 
 
 ## Roadmap
 
 - [x] Uploading basic project
+- [ ] Fix bug related to graph time not being displayed properly
+- [ ] Add loading spin/display to page until all content is fully loaded
 - [ ] Add error detection to avoid technical errors from stopping the app
 - [ ] Add API call limit detection to warn users of maxed out API call
 - [ ] Add simulated investment calculation
@@ -80,6 +81,6 @@ See the [open issues](https://github.com/whuang24/ReactStockTracker/issues) for 
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: public/Screenshot1.png
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [React-url]: https://reactjs.org/
