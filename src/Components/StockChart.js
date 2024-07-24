@@ -76,25 +76,8 @@ export default function StockChart(props) {
         }
     }, [])
 
-    /*
-        Function: graphSetup()
-        Purpose: to set up the graph horizontal axis styling options
-    */
-    async function graphSetup() {
-        var today = new Date();
-        var todayEst = new Date(Date.parse(today.toLocaleString('en-US', {timeZone: "America/New_York"})));
-
-        var estNineThirty = new Date(Date.parse(today.toLocaleString('en-US', {timeZone: "America/New_York"})));
-        estNineThirty.setHours(9, 30, 0);
-
-        console.log(todayEst)
-        console.log(estNineThirty);
-
-        if (todayEst.getTime() < estNineThirty.getTime()) {
-            todayEst.setDate(todayEst.getDate() - 1);
-        }
-
-        var parts = todayEst.toLocaleString().split(',')[0].split('/');
+    function graphAxisLabels(date) {
+        var parts = date.toLocaleString().split(',')[0].split('/');
         var todayString = `${parts[2]}-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`;
 
         setChartOptions(oldOptions => {
@@ -117,6 +100,26 @@ export default function StockChart(props) {
                 }
             }
         })
+    }
+
+    
+
+    /*
+        Function: graphSetup()
+        Purpose: to set up the graph horizontal axis styling options
+    */
+    function graphSetup() {
+        var today = new Date();
+        var todayEst = new Date(Date.parse(today.toLocaleString('en-US', {timeZone: "America/New_York"})));
+
+        var estNineThirty = new Date(Date.parse(today.toLocaleString('en-US', {timeZone: "America/New_York"})));
+        estNineThirty.setHours(9, 30, 0);
+
+        if (todayEst.getTime() < estNineThirty.getTime()) {
+            todayEst.setDate(todayEst.getDate() - 1);
+        }
+        
+        graphAxisLabels(todayEst);
     }
 
     useEffect(() => {
@@ -143,6 +146,8 @@ export default function StockChart(props) {
                                 new Date() :
                                 new Date(keys[keys.length - 1].split('T')[0]);
             const latestMarketTime = latestDate.setHours(9, 30, 0, 0);
+
+            graphAxisLabels(latestDate);
 
             var newData = [];
 
