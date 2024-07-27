@@ -10,11 +10,10 @@ export default function StockSearchbar(props) {
     const dropdown = useRef(null);
 
     useEffect(() => {
-
         async function searching(symbol) {
             if (search && search !== "") {
                 finnhubClient.symbolSearch(symbol, (error, data, response) => {
-                    setSuggestions(data.result.slice(0, 5))
+                    setSuggestions(data.result.filter(stock => !stock.symbol.includes('.')).slice(0, 5))
                 })
             } else {
                 setSuggestions([])
