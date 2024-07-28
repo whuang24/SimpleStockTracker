@@ -27,6 +27,8 @@ This stock tracker is a very simplified one that allows users to keep track of s
 
 This project is an ongoing one that is open for feature suggestions and expansion ideas because I want to build something more functional and capable of tracking more stock related information.
 
+Please be aware that given the project utilizes Firebase, I have removed my personal Firebase API keys and information.
+
 ### Built With
 
 - [![React][React.js]][React-url]
