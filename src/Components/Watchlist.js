@@ -77,7 +77,6 @@ export default function Watchlist(props) {
                     <h1>Watchlist</h1>
                     <StockSearchbar className="searchBar" watchlist={props.watchlist} handleSelect={props.selectWatchlist} />
                 </div>
-                
             </div>
             <div className="watchlistBody">
                 {stockCardElements}
