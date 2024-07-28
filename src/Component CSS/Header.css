@@ -149,6 +149,17 @@
         }
 
         .detailName {
+            margin: 0;
+            justify-items: center;
+            text-align: center;
+        }
+
+        .companyLogo,
+        .detailSymbol {
+            margin: 0;
+        }
+
+        .exchange {
             align-self: center;
         }
     }
