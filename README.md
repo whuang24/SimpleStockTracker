@@ -73,6 +73,7 @@ The app is accessible through the app icon above or the following URL.
     - [ ] Toggle feature
 - [ ] Stock Investment advisory
     - [ ] Bullish/Bearish market indicator
+- [ ] Shift the app to be capable of fetching stock data 24/7 regardless of app activity
 
 See the [open issues](https://github.com/whuang24/ReactStockTracker/issues) for a full list of proposed features (and known issues).
 
