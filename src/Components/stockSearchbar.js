@@ -2,6 +2,7 @@ import React, {useRef, useState, useEffect} from "react"
 import "../Component CSS/stockSearchbar.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {finnhubClient} from "../finnhubService"
+import {API_KEY as token} from "../finnhubService"
 
 export default function StockSearchbar(props) {
     const [search, setSearch] = useState('')
@@ -12,9 +13,14 @@ export default function StockSearchbar(props) {
     useEffect(() => {
         async function searching(symbol) {
             if (search && search !== "") {
-                finnhubClient.symbolSearch(symbol, (error, data, response) => {
-                    setSuggestions(data.result.filter(stock => !stock.symbol.includes('.')).slice(0, 5))
-                })
+                fetch(`https://finnhub.io/api/v1/search?token=${token}&q=${symbol}`)
+                    .then(response => response.json())
+                    .then(data => setSuggestions(data.result.filter(stock => !stock.symbol.includes('.')).slice(0, 5)))
+                    .catch(error => console.log('Error:', error));
+                // finnhubClient.symbolSearch(symbol, (error, data, response) => {
+                //     console.log(data);
+                //     setSuggestions(data.result.filter(stock => !stock.symbol.includes('.')).slice(0, 5))
+                // })
             } else {
                 setSuggestions([])
                 setDropdownVisible(false)

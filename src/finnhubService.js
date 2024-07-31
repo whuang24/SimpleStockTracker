@@ -1,7 +1,7 @@
 // finnhubService.js
 import axios from 'axios';
 
-const API_KEY = 'cphvkspr01qjh6bhvaa0cphvkspr01qjh6bhvaag'; // Replace with your Finnhub API key
+export const API_KEY = 'cphvkspr01qjh6bhvaa0cphvkspr01qjh6bhvaag'; // Replace with your Finnhub API key
 
 //Basic finnhub initialization
 const finnhub = require('finnhub')
