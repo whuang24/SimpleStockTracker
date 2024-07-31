@@ -41,7 +41,7 @@ Please be aware that given the project utilizes Firebase, I have removed my pers
 The following is a list of the limitations that the app currently contain due to a lack of technological resources and limited financial capabilities.
 
 * The app can only have a max of 60 API calls per minute. (Please avoid adding many stocks to watchlist or viewing details of many different stocks in a short period of time)
-* The graph can only display stock data that is collected when the app is active and the specified stocks are selected in the watchlist. 
+* The graph can only display stock data that is collected when the app is active, and only the specified stocks that are selected in the watchlist will have their stock data collected. This is due to the lack of access through Finnhub functionalities.
 * The app is built for minimum screen width of 600px because any smaller screens would have a much more difficult time seeing the stock graph.
 * The stocks that are available are only the NASDAQ and NYSE stocks.
 
