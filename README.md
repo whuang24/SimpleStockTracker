@@ -59,6 +59,7 @@ The app is accessible through the app icon above or the following URL.
 
 - [x] Uploading basic project
 - [ ] Fix bug related to graph time not being displayed properly
+- [ ] Fix bug in which the app does not run on Firefox due to CORS issues
 - [ ] Add loading spin/display to page until all content is fully loaded
 - [ ] Add error detection to avoid technical errors from stopping the app
 - [ ] Add API call limit detection to warn users of maxed out API call
