@@ -1,0 +1,114 @@
+.searchbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  position: relative;
+  padding: 1rem;
+  background-color: #2F2F2F;
+  border-radius: 1.625rem;
+  margin-left: 2rem;
+}
+
+.stockSearch {
+  width: 100%;
+  border: none;
+  outline: none;
+  margin-left: 0.75rem;
+  background-color: transparent;
+  font-size: 1rem;
+  color: rgba(235, 235, 235, 0.8);
+}
+
+.stockSearch:focus {
+  caret-color: rgba(235, 235, 235, 0.8);
+}
+
+.searchIcon {
+  color: rgba(235, 235, 235, 0.8);
+}
+
+.searchResults {
+  position: absolute;
+  top: 100%;
+  width: 90% !important;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12),
+              0 4px 8px rgba(0, 0, 0, 0.24);
+  border-top: none;
+  background-color: #464646;
+  z-index: 1000;
+  border-radius: 1rem;
+  color: rgba(235, 235, 235, 0.9);
+}
+
+.searchResultItems {
+  padding: 1rem;
+  cursor: pointer;
+  display: flex;
+  cursor: default;
+}
+
+.searchResultItems:not(:last-child) {
+  border-bottom: 1px solid rgba(106, 107, 109, 1);
+}
+
+.searchResultTitle {
+  flex: 3;
+  text-wrap: wrap;
+  justify-content: start;
+  display:flex;
+  flex-direction: column;
+  height: 3rem;
+}
+
+.resultSymbol {
+  color: rgba(235, 235, 235, 0.9);
+  font-weight: 600;
+  margin: 0;
+  text-align: start;
+}
+
+.resultName {
+  color: rgba(235, 235, 235, 0.9);
+  font-weight: 200;
+  margin: 0;
+  text-align: start;
+}
+
+.searchResultItems > p {
+  font-size: 0.75rem;
+  word-wrap: break-word;
+  width: 8rem;
+  text-align: right;
+  margin-left: auto;
+  align-self: center;
+}
+
+.searchResultItems > button {
+  cursor: pointer;
+  margin-left: auto;
+  background-color: rgba(11, 148, 82, 1);
+  color: rgba(235, 235, 235, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  align-self: center;
+}
+
+.addIcon {
+  font-size: 1.25rem;
+}
+
+
+.search-bar-dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+@media (max-width: 1575px) {
+  .searchResultTitle {
+    height: auto;
+  }
+}

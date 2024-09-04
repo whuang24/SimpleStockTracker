@@ -1,0 +1,93 @@
+.watchlistContainer {
+    padding: 1rem;
+    position: relative;
+    flex: 1;
+    background-color: #27292D;
+    border-radius: 1rem;
+    margin: 2rem;
+    overflow: hidden;
+    max-height: calc(100vh - 6rem);
+}
+
+.watchlistHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.watchlistHeader > h1 {
+  align-self: start;
+  font-weight: 500;
+  margin-left: 2rem;
+  color: rgba(235, 235, 235, 0.8);
+}
+
+.watchlistBody {
+    max-height: 70%;
+    margin: 2rem 0rem;
+    padding: 1rem 2rem;
+    overflow-y: hidden;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem 0.5rem;
+    box-sizing: content-box;
+    scrollbar-gutter: stable;
+}
+
+.watchlistBody:hover {
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
+.watchlistBody::-webkit-scrollbar {
+  width: 0.3rem;
+}
+
+.watchlistBody::-webkit-scrollbar-thumb {
+  background-color: rgba(177, 177, 177, 0.2);
+  border-radius: 1rem;
+}
+
+.watchlistBody::-webkit-scrollbar-track {
+  background-color: rgba(177, 177, 177, 0.1);
+  border-radius: 1rem;
+  margin: 1rem 0rem;
+}
+
+@media (max-width: 1575px) {
+  .watchlistBody {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    scrollbar-gutter: stable;
+  }
+
+  .watchlistContainer {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0;
+    margin: 2rem;
+    overflow: visible;
+  }
+
+  .watchlistHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .watchlistBody::-webkit-scrollbar {
+    height: 0.75rem;
+  }
+  
+  .watchlistBody::-webkit-scrollbar-thumb {
+    background-color: rgba(177, 177, 177, 0.2);
+    border-radius: 1rem;
+  }
+  
+  .watchlistBody::-webkit-scrollbar-track {
+    background-color: rgba(177, 177, 177, 0.1);
+    border-radius: 1rem;
+    margin: 0rem 1rem;
+  }
+}
