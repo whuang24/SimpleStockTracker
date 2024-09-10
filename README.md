@@ -23,7 +23,7 @@
 
 [![Simple Stock Tracker Screenshot][product-screenshot]](https://simplestocktracker.netlify.app/)
 
-This stock tracker is a very simplified one that allows users to keep track of stock prices, daily price trends, some basic stock data, and most recent news articles.
+This stock tracker allows users to keep track of stock prices, daily price trends, some basic stock data, and most recent news articles.
 
 This project is an ongoing one that is open for feature suggestions and expansion ideas because I want to build something more functional and capable of tracking more stock related information.
 
