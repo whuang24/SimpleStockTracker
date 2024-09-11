@@ -78,6 +78,7 @@ export default function StockChart(props) {
 
     function graphAxisLabels(date) {
         var parts = date.toLocaleString().split(',')[0].split('/');
+        console.log(date);
         var todayString = `${parts[2]}-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`;
 
         setChartOptions(oldOptions => {
@@ -145,6 +146,10 @@ export default function StockChart(props) {
             const latestDate = keys.length === 0 ? 
                                 new Date() :
                                 new Date(keys[keys.length - 1].split('T')[0]);
+
+            console.log(keys[keys.length - 1].split('T')[0]);
+            console.log(latestDate);
+            console.log(latestDate.getUTCDate());
             const latestMarketTime = latestDate.setHours(9, 30, 0, 0);
 
             graphAxisLabels(latestDate);

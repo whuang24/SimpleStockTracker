@@ -42,7 +42,11 @@ export default function Watchlist(props) {
             for (let i = 0; i < props.watchlist.length; i++) {
                 const symbol = props.watchlist[i];
 
-                const currTime = Date.now();
+                const currTime = new Date();
+                currTime.setTime(currTime.getTime() + currTime.getTimezoneOffset()*60*1000);
+
+                const estOffSet = -300;
+                const currEstTime = new Date(currTime.getTime() + estOffSet*60*1000);
             
                 finnhubClient.quote(symbol, (error, data, response) => {
                     setWatchlistData(oldData => {
@@ -52,7 +56,7 @@ export default function Watchlist(props) {
                     })
 
                     if (marketStatus) {
-                        syncWithDatabase(symbol, currTime, data.dp);
+                        syncWithDatabase(symbol, currEstTime, data.dp);
                     }
                 })
             }
