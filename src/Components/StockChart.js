@@ -78,7 +78,6 @@ export default function StockChart(props) {
 
     function graphAxisLabels(date) {
         var parts = date.toLocaleString().split(',')[0].split('/');
-        console.log(date);
         var todayString = `${parts[2]}-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`;
 
         setChartOptions(oldOptions => {
@@ -101,6 +100,24 @@ export default function StockChart(props) {
                 }
             }
         })
+    }
+
+    function daylightSavingDetection() {
+        const timeZone = 'America/New_York';
+
+        const formatter = new Intl.DateTimeFormat('en-US', {
+            timeZone,
+            timeZoneName: 'short'
+        });
+    
+        const formattedParts = formatter.formatToParts(new Date());
+        const timeZoneName = formattedParts.find(part => part.type === 'timeZoneName').value;
+    
+        if (timeZoneName === 'EDT') {
+            return 4 * 60 * 60 * 1000;
+        } else if (timeZoneName === 'EST') {
+            return 5 * 60 * 60 * 1000;
+        }
     }
 
     
@@ -147,9 +164,12 @@ export default function StockChart(props) {
                                 new Date() :
                                 new Date(keys[keys.length - 1].split('T')[0]);
 
-            const latestMarketTime = latestDate.setHours(9, 30, 0, 0);
+            const adjustedLatestDate = new Date(latestDate.getTime() - daylightSavingDetection());
+            console.log(adjustedLatestDate);
 
-            graphAxisLabels(latestDate);
+            const latestMarketTime = adjustedLatestDate.setHours(9, 30, 0, 0);
+
+            graphAxisLabels(adjustedLatestDate);
 
             var newData = [];
 
@@ -157,14 +177,14 @@ export default function StockChart(props) {
                 var nestedObject = dataArray[keys[i]];
 
                 const est = 'America/New_York'
-                const estTime = toZonedTime(nestedObject.time, est);
+                const nyTime = toZonedTime(nestedObject.time, est);
 
-                const estTimestamp = estTime.getTime();
+                const nyTimestamp = nyTime.getTime();
 
                 const percentage = nestedObject.percentage;
 
-                if (estTimestamp > latestMarketTime) {
-                    newData.push([estTime, percentage])
+                if (nyTimestamp > latestMarketTime) {
+                    newData.push([nyTime, percentage])
                 }
             }
 
