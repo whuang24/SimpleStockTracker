@@ -147,9 +147,6 @@ export default function StockChart(props) {
                                 new Date() :
                                 new Date(keys[keys.length - 1].split('T')[0]);
 
-            console.log(keys[keys.length - 1].split('T')[0]);
-            console.log(latestDate);
-            console.log(latestDate.getUTCDate());
             const latestMarketTime = latestDate.setHours(9, 30, 0, 0);
 
             graphAxisLabels(latestDate);

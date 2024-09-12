@@ -43,10 +43,10 @@ export default function Watchlist(props) {
                 const symbol = props.watchlist[i];
 
                 const currTime = new Date();
+
                 currTime.setTime(currTime.getTime() + currTime.getTimezoneOffset()*60*1000);
 
-                const estOffSet = -300;
-                const currEstTime = new Date(currTime.getTime() + estOffSet*60*1000);
+                const currTimeNum = currTime.getTime();
             
                 finnhubClient.quote(symbol, (error, data, response) => {
                     setWatchlistData(oldData => {
@@ -56,7 +56,7 @@ export default function Watchlist(props) {
                     })
 
                     if (marketStatus) {
-                        syncWithDatabase(symbol, currEstTime, data.dp);
+                        syncWithDatabase(symbol, currTimeNum, data.dp);
                     }
                 })
             }
