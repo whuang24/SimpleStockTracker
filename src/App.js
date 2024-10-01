@@ -3,38 +3,54 @@ import Watchlist from "./Components/Watchlist"
 import Details from "./Components/Details"
 import React, {useState, useEffect} from 'react'
 
+
 function App() {
-  const [watchlist, setWatchlist] = useState(
-    localStorage.getItem("watchlistSymbols") === 'null' || !localStorage.getItem("watchlistSymbols") ?
-    [] :
-    JSON.parse(localStorage.getItem("watchlistSymbols"))
-  )
+  const [watchlist, setWatchlist] = useState([])
   const [currStock, setCurrStock] = useState('')
 
-    function detailSelect(symbol) {
-      setCurrStock(symbol);
-    }
+  useEffect(() => {
+    fetch('https://git.heroku.com/simple-stock-tracker-server.git/watchlist')
+      .then(response => response.json())
+      .then(data => setWatchlist(data.watchlist))
+      .catch(error => console.error('Error fetching watchlist:', error));
+  }, [])
 
-    useEffect(() => {
-      localStorage.setItem("watchlistSymbols", JSON.stringify(watchlist));
-    }, [watchlist])
+  useEffect(() => {
+    fetch('https://git.heroku.com/simple-stock-tracker-server.git/updating_watchlist', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({watchlist}),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Stock added:', data);
+    })
+    .catch(error => console.error('Error adding stock:', error));
+  }, [watchlist])
 
-    function selectWatchlist(arrayOfSymbols) {
-      setWatchlist(oldWatchlist => {
-          return [
-          ...arrayOfSymbols,
-          ...oldWatchlist
-          ]
-      })
-    }
+  function detailSelect(symbol) {
+    setCurrStock(symbol);
+  }
 
-    function removeFromWatchlist(symbol) {
-      setWatchlist(oldWatchlist => {
-        return oldWatchlist.filter(stockSymbol => stockSymbol !== symbol)
-      })
+  function selectWatchlist(arrayOfSymbols) {
+    setWatchlist(oldWatchlist => {
+        return [
+        ...arrayOfSymbols,
+        ...oldWatchlist
+        ]
+    })
+  }
 
-      setCurrStock('')
-    }
+  function removeFromWatchlist(symbol) {
+    setWatchlist(oldWatchlist => {
+      return oldWatchlist.filter(stockSymbol => stockSymbol !== symbol)
+    })
+
+    setCurrStock('')
+  }
+
 
   return (
     <div className="App">

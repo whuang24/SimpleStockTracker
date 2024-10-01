@@ -165,7 +165,6 @@ export default function StockChart(props) {
                                 new Date(keys[keys.length - 1].split('T')[0]);
 
             const adjustedLatestDate = new Date(latestDate.getTime() - daylightSavingDetection());
-            console.log(adjustedLatestDate);
 
             const latestMarketTime = adjustedLatestDate.setHours(9, 30, 0, 0);
 
