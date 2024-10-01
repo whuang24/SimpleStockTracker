@@ -44,7 +44,7 @@ The following is a list of the limitations that the app currently contain due to
 * The graph can only display stock data that is collected when the app is active, and only the specified stocks that are selected in the watchlist will have their stock data collected. This is due to the lack of access through Finnhub functionalities.
 * The app is built for minimum screen width of 600px because any smaller screens would have a much more difficult time seeing the stock graph.
 * The stocks that are available are only the NASDAQ and NYSE stocks.
-* The project is currently not supported on Firefox and Safari
+* The project is not supported on Firefox and Safari due to the Finnhub request policy.
 
 
 ## Getting Started
@@ -60,7 +60,6 @@ The app is accessible through the app icon above or the following URL.
 
 - [x] Uploading basic project
 - [ ] Fix bug related to graph time not being displayed properly
-- [ ] Fix bug in which the app does not run on Firefox due to CORS issues
 - [ ] Add loading spin/display to page until all content is fully loaded
 - [ ] Add error detection to avoid technical errors from stopping the app
 - [ ] Add API call limit detection to warn users of maxed out API call
