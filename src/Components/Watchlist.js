@@ -26,17 +26,17 @@ export default function Watchlist(props) {
     
     
     useEffect(() => {
-        async function syncWithDatabase(symbol, currTime, currPercent) {
-            const docRef = doc(db, "graphData", symbol)
-            await setDoc(docRef, {
-                graphData: {
-                    [new Date().toISOString()]: {
-                        time: currTime,
-                        percentage: currPercent
-                    }
-                }
-            }, {merge: true})
-        }
+        // async function syncWithDatabase(symbol, currTime, currPercent) {
+        //     const docRef = doc(db, "graphData", symbol)
+        //     await setDoc(docRef, {
+        //         graphData: {
+        //             [new Date().toISOString()]: {
+        //                 time: currTime,
+        //                 percentage: currPercent
+        //             }
+        //         }
+        //     }, {merge: true})
+        // }
 
         async function fetchData() {
             for (let i = 0; i < props.watchlist.length; i++) {
@@ -46,7 +46,7 @@ export default function Watchlist(props) {
 
                 currTime.setTime(currTime.getTime() + currTime.getTimezoneOffset()*60*1000);
 
-                const currTimeNum = currTime.getTime();
+                // const currTimeNum = currTime.getTime();
             
                 finnhubClient.quote(symbol, (error, data, response) => {
                     setWatchlistData(oldData => {
@@ -55,9 +55,9 @@ export default function Watchlist(props) {
                         return newData
                     })
 
-                    if (marketStatus) {
-                        syncWithDatabase(symbol, currTimeNum, data.dp);
-                    }
+                    // if (marketStatus) {
+                    //     syncWithDatabase(symbol, currTimeNum, data.dp);
+                    // }
                 })
             }
         }
