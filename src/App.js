@@ -9,14 +9,14 @@ function App() {
   const [currStock, setCurrStock] = useState('')
 
   useEffect(() => {
-    fetch('https://simple-stock-tracker-server-e58667ae419b.herokuapp.com//watchlist')
+    fetch('https://simple-stock-tracker-server-e58667ae419b.herokuapp.com/watchlist')
       .then(response => response.json())
       .then(data => setWatchlist(data.watchlist))
       .catch(error => console.error('Error fetching watchlist:', error));
   }, [])
 
   useEffect(() => {
-    fetch('https://simple-stock-tracker-server-e58667ae419b.herokuapp.com//updating_watchlist', {
+    fetch('https://simple-stock-tracker-server-e58667ae419b.herokuapp.com/updating_watchlist', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
