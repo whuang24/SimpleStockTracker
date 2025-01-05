@@ -12,7 +12,7 @@ function App() {
   useEffect(() => {
     fetch('https://simple-stock-tracker-server-e58667ae419b.herokuapp.com/get_watchlist')
       .then(response => response.json())
-      .then((watchlist) => setWatchlist(watchlist))
+      .then((watchlist) => setWatchlist(watchlist.sort()))
       .catch(error => console.error('Error fetching watchlist:', error));
   }, [])
 
@@ -21,7 +21,7 @@ function App() {
       setInitRender(false);
       return;
     }
-    
+
     const standardWatchlist = watchlist.reduce((acc, symbol) => {
       acc[symbol] = {};
       return acc;
