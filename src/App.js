@@ -13,7 +13,7 @@ function App() {
       .then(response => response.json())
       .then(data => setWatchlist(data.watchlist))
       .catch(error => console.error('Error fetching watchlist:', error));
-  }, [])
+  }, [watchlist])
 
   useEffect(() => {
     var body = {
