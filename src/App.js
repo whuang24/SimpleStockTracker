@@ -16,18 +16,20 @@ function App() {
   }, [])
 
   useEffect(() => {
+    var body = {
+      watchlist: watchlist
+    }
+
     fetch('https://simple-stock-tracker-server-e58667ae419b.herokuapp.com/updating_watchlist', {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({watchlist}),
+      body: JSON.stringify(body),
     })
     .then(response => response.json())
-    .then(data => {
-      console.log('Stock added:', data);
-    })
-    .catch(error => console.error('Error adding stock:', error));
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
   }, [watchlist])
 
   function detailSelect(symbol) {
