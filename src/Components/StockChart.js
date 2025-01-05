@@ -3,7 +3,7 @@ import "../Component CSS/StockChart.css"
 import { Chart } from 'react-google-charts'
 import 'chart.js/auto'
 import { isMarketOpen } from "../finnhubService.js";
-import { onSnapshot} from "firebase/firestore.js";
+import { onSnapshot} from "firebase/firestore";
 import { graphDataCollection} from "../firebase.js";
 import { toZonedTime} from 'date-fns-tz'
 

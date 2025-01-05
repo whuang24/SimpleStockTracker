@@ -7,17 +7,28 @@ import React, {useState, useEffect} from 'react'
 function App() {
   const [watchlist, setWatchlist] = useState([])
   const [currStock, setCurrStock] = useState('')
+  const [initRender, setInitRender] = useState(true);
 
   useEffect(() => {
-    fetch('https://simple-stock-tracker-server-e58667ae419b.herokuapp.com/watchlist')
+    fetch('https://simple-stock-tracker-server-e58667ae419b.herokuapp.com/get_watchlist')
       .then(response => response.json())
-      .then(data => setWatchlist(data.watchlist))
+      .then((watchlist) => setWatchlist(watchlist))
       .catch(error => console.error('Error fetching watchlist:', error));
-  }, [watchlist])
+  }, [])
 
   useEffect(() => {
+    if (initRender) {
+      setInitRender(false);
+      return;
+    }
+    
+    const standardWatchlist = watchlist.reduce((acc, symbol) => {
+      acc[symbol] = {};
+      return acc;
+    }, {})
+
     var body = {
-      watchlist: watchlist
+      watchlist: standardWatchlist
     }
 
     fetch('https://simple-stock-tracker-server-e58667ae419b.herokuapp.com/updating_watchlist', {
@@ -43,6 +54,8 @@ function App() {
         ...oldWatchlist
         ]
     })
+
+    console.log(watchlist);
   }
 
   function removeFromWatchlist(symbol) {
