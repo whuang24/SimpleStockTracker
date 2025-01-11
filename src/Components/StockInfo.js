@@ -56,7 +56,6 @@ export default function StockInfo(props) {
                 });
 
                 const financialData = await fetchFinancials();
-                console.log(financialData.metric);
                 var marketCap = 
                     financialData.metric.marketCapitalization > 1000000 ? 
                         `${roundTo2(financialData.metric.marketCapitalization / 1000)}B USD` :
