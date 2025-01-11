@@ -164,26 +164,29 @@ export default function StockChart(props) {
                                 new Date() :
                                 new Date(keys[keys.length - 1].split('T')[0]);
 
-            const adjustedLatestDate = new Date(latestDate.getTime() - daylightSavingDetection());
-
-            const latestMarketTime = adjustedLatestDate.setHours(9, 30, 0, 0);
-
-            graphAxisLabels(adjustedLatestDate);
-
             var newData = [];
+            const latestDateString = latestDate.toISOString().split("T")[0];
+            const latestMarketTime = new Date(`${latestDateString}T00:00:00`);
+            latestMarketTime.setHours(9, 30, 0 ,0);
+
+            graphAxisLabels(latestMarketTime);
 
             for (var i = 0; i < keys.length; i++) {
-                var nestedObject = dataArray[keys[i]];
+                const keyDate = keys[i].split('T')[0];
 
-                const est = 'America/New_York'
-                const nyTime = toZonedTime(nestedObject.time, est);
+                if (keyDate === latestDateString) {
+                    var nestedObject = dataArray[keys[i]];
 
-                const nyTimestamp = nyTime.getTime();
-
-                const percentage = nestedObject.percentage;
-
-                if (nyTimestamp > latestMarketTime) {
-                    newData.push([nyTime, percentage])
+                    const est = 'America/New_York'
+                    const nyTime = toZonedTime(nestedObject.time, est);
+    
+                    const nyTimestamp = nyTime.getTime();
+    
+                    const percentage = nestedObject.percentage;
+    
+                    if (nyTimestamp > latestMarketTime) {
+                        newData.push([nyTime, percentage])
+                    }
                 }
             }
 
