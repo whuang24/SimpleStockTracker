@@ -56,6 +56,7 @@ export default function StockInfo(props) {
                 });
 
                 const financialData = await fetchFinancials();
+                console.log(financialData.metric);
                 var marketCap = 
                     financialData.metric.marketCapitalization > 1000000 ? 
                         `${roundTo2(financialData.metric.marketCapitalization / 1000)}B USD` :
@@ -69,7 +70,7 @@ export default function StockInfo(props) {
                     const peRatio = roundTo2(currentPrice / financialData.metric.epsInclExtraItemsTTM);
                     const newStats = new Map(oldStats);
                     newStats.set("52W Range", `$${financialData.metric['52WeekLow']} - $${financialData.metric['52WeekHigh']}`)
-                        .set("Yield", `${roundTo2(financialData.metric.dividendYieldIndicatedAnnual)}%`)
+                        .set("Yield", `${financialData.metric.dividendYieldIndicatedAnnual? roundTo2(financialData.metric.dividendYieldIndicatedAnnual) : "-"}%`)
                         .set("P/E Ratio", peRatio)
                         .set("Market Cap", marketCap)
                         .set("Company Value", enterpriseVal);
