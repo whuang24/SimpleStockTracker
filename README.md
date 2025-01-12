@@ -59,7 +59,7 @@ The app is accessible through the app icon above or the following URL.
 ## Roadmap
 
 - [x] Uploading basic project
-- [ ] Fix bug related to graph time not being displayed properly
+- [x] Fix bug related to graph time not being displayed properly
 - [ ] Add loading spin/display to page until all content is fully loaded
 - [ ] Add error detection to avoid technical errors from stopping the app
 - [ ] Add API call limit detection to warn users of maxed out API call
@@ -74,7 +74,7 @@ The app is accessible through the app icon above or the following URL.
     - [ ] Toggle feature
 - [ ] Stock Investment advisory
     - [ ] Bullish/Bearish market indicator
-- [ ] Shift the app to be capable of fetching stock data 24/7 regardless of app activity
+- [x] Shift the app to be capable of fetching stock data 24/7 regardless of app activity
 
 See the [open issues](https://github.com/whuang24/ReactStockTracker/issues) for a full list of proposed features (and known issues).
 
